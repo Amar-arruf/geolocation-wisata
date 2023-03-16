@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skripsi Geolocation</title>
     <!-- google iconts  -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,600,0,0" />
     <!-- css boostrap -->
     <link rel="stylesheet" href="<?= base_url('bootstrap/css/bootstrap.min.css') ?>">
     <!-- menyambungkan mapbox css dan js  -->
@@ -14,6 +14,7 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
     <!-- CSS Custom -->
     <link rel="stylesheet" href="<?= base_url('style/style.css') ?>">
+    <link rel="stylesheet" href="https://vjs.zencdn.net/8.0.4/video-js.css">
 </head>
 <body>
     <!-- navbar -->
@@ -28,9 +29,14 @@
     <!-- fitur pencarian -->
     <?= $this->include('webComponent/search'); ?>
     <!-- Akhir Fitur Pencarian -->
+    <!-- modal detail -->
+   <?= $this->include('webComponent/modalDetail'); ?>
+    <!-- akhir modal -->
 
 <!-- js boostrap -->
     <script src="<?= base_url('bootstrap/js/bootstrap.bundle.min.js') ?>" ></script>
+    <!-- video js -->
+    <script src="https://vjs.zencdn.net/8.0.4/video.min.js" ></script>
 
     <script type= "module">  
     mapboxgl.accessToken = 'pk.eyJ1IjoiYW1hcmFycnVmMjQiLCJhIjoiY2xldGdjNnR4MWZ3cTN2cDQ5djduZmUxNyJ9.PXQDnSL6qVCGg1OX63BZ7A'
@@ -142,24 +148,24 @@
         for (const data of stores.features) {
         const ItemList = document.createElement('div');
         ItemList.classList.add('card' , 'w-100', 'mb-2', )
-        ItemList.style.cursor = "pointer"
+        ItemList.style.cursor = "pointer";
         
         ItemList.innerHTML = `
             <div class="card-body d-flex justify-content-between align-items-center">
-            <div class="card-title">
-                <p class= "fw-bold" >${data.properties["ID"]}</p>
-                <p class="card-subtitle mb-2 text-muted">${data.properties["NAMA"]}</p>
-            </div>
-            <a href="#" class="card-link">DETAIL</a>
+              <div class="card-title">
+                  <p class= "fw-bold" >${data.properties["ID"]}</p>
+                  <p class="card-subtitle mb-2 text-muted">${data.properties["NAMA"]}</p>
+              </div>
+              <button class="btn btn-primary">Detail</button>
             </div>
         `;
-
-        ItemList.addEventListener("click", () => {
+        ItemList.addEventListener("click",()=>{
           flyToStore(data);
           createPopUp(data)
         })
 
         listing.appendChild(ItemList)
+
 
       }
 
@@ -201,6 +207,27 @@
           result.appendChild(createElItem)
         });
       }
+
+      // tangkap element modal
+      const elemementAllModalDetail = document.getElementsByClassName("modalClass");
+      // tangkap element button detail
+
+      const elButton = document.getElementsByClassName("btn");
+
+      for (let i = 0; i < elemementAllModalDetail.length ; i++) {
+        elButton[i].addEventListener("click", ()=> {
+          if (elemementAllModalDetail[i].classList.contains("d-none")) {
+            elemementAllModalDetail[i].classList.remove("d-none");
+          } else{
+            elemementAllModalDetail[i].classList.add("d-none");
+          }
+          
+          
+        })
+      }
+
+      
+      
 
     }
     </script>

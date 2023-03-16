@@ -9,6 +9,8 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
+use App\Libraries\CloudinaryConnect;
+
 /**
  * Class BaseController
  *
@@ -43,6 +45,10 @@ abstract class BaseController extends Controller
      */
     // protected $session;
 
+    // create protect variable Cloudinary
+
+    protected $Cloudinary;
+
     /**
      * Constructor.
      */
@@ -52,6 +58,7 @@ abstract class BaseController extends Controller
         parent::initController($request, $response, $logger);
 
         // Preload any models, libraries, etc, here.
+        $this->Cloudinary = new CloudinaryConnect();
 
         // E.g.: $this->session = \Config\Services::session();
     }

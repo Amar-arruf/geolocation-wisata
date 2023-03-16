@@ -56,7 +56,7 @@
   left: 30px;
   content: "";
   width: 25%;
-  height: 60vh;
+  height: 40vh;
 }
 
 #sidebarmodal .bg-primary h6 {
@@ -94,4 +94,12 @@
 .box-search {
   right: 30px;
   top: 102px;
+}
+
+.modalClass {
+  top: 102px;
+  left: 30px;
+  height: 80vh;
+  width: 30rem;
+  transition: all 1ms ease;
 }
