@@ -93,26 +93,45 @@
        
     })
 
+   
+
+    function getModalDetail(id) {
+       // tangkap element modal detail
+    const elementModal = document.getElementById(id);
+
+        if (elementModal.classList.contains("d-none")) {
+          elementModal.classList.remove("d-none");
+        } else {
+          elementModal.classList.add("d-none")
+        }
+      }
+
     function addMarker() {
+      let i =0
         // tampilkan data GeoJSON DOM HTML
         for (const marker of stores.features) {
-        const el = document.createElement('div');
-        el.id = `marker-${marker.properties["ID"]}`
-        el.className = 'marker'
+          const el = document.createElement('div');
+          el.id = `marker-${marker.properties["ID"]}`
+          el.className = 'marker'
 
-        new mapboxgl.Marker(el)
-            .setLngLat(marker.geometry.coordinates)
-            .addTo(map)
+          new mapboxgl.Marker(el)
+              .setLngLat(marker.geometry.coordinates)
+              .addTo(map)
 
-        el.addEventListener('click',()=> {
-            //terbang ke point yang di klik
-            flyToStore(marker)
-            // tutup semua popup yang lain dan tampilkan popup point yang di kliked
-            createPopUp(marker)
-        })
-
+          
+          el.addEventListener('click',()=> {
+              //terbang ke point yang di klik
+              flyToStore(marker)
+              // tutup semua popup yang lain dan tampilkan popup point yang di kliked
+              createPopUp(marker)
+              // tampilkan detail modal
+              getModalDetail(marker.properties["ID"])
+            })
+            i++;
         }
     }
+
+    
 
     function flyToStore (currentFeature) {
         map.flyTo({
@@ -156,7 +175,7 @@
                   <p class= "fw-bold" >${data.properties["ID"]}</p>
                   <p class="card-subtitle mb-2 text-muted">${data.properties["NAMA"]}</p>
               </div>
-              <button class="btn btn-primary">Detail</button>
+              <button class="btn btn-primary Detail">Detail</button>
             </div>
         `;
         ItemList.addEventListener("click",()=>{
@@ -212,10 +231,11 @@
       const elemementAllModalDetail = document.getElementsByClassName("modalClass");
       // tangkap element button detail
 
-      const elButton = document.getElementsByClassName("btn");
+      const elButton = document.getElementsByClassName("Detail");
 
       for (let i = 0; i < elemementAllModalDetail.length ; i++) {
         elButton[i].addEventListener("click", ()=> {
+          
           if (elemementAllModalDetail[i].classList.contains("d-none")) {
             elemementAllModalDetail[i].classList.remove("d-none");
           } else{

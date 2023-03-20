@@ -1,6 +1,6 @@
 <?php  $i =0 ;?>
 <?php foreach($getdataCloud->resources as $item) : ?>
-  <div class="card rounded-4 shadow position-absolute overflow-hidden modalClass d-none ">
+  <div class="card rounded-4 shadow position-absolute overflow-hidden modalClass d-none" id = "<?= $getData[$i]["ID"] ?>">
     <div class="bg-primary p-2 text-light position-absolute w-100">
       <span 
         class="material-symbols-rounded d-block cursor-pointer close" 
