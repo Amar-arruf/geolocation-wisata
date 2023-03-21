@@ -1,6 +1,9 @@
 <?php
 
+
 // Check PHP version.
+
+
 $minPhpVersion = '7.4'; // If you update this, don't forget to update `spark`.
 if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
     $message = sprintf(
@@ -63,5 +66,17 @@ $app->setContext($context);
  * Now that everything is setup, it's time to actually fire
  * up the engines and make this app do its thang.
  */
+
+
+require_once ROOTPATH . 'vendor\autoload.php';
+// mengeload library Dotenv kedalam Codeigniter agar terbaca
+require_once ROOTPATH .'vendor\vlucas\phpdotenv\src\Dotenv.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(ROOTPATH);
+$dotenv->load();
+
+
 
 $app->run();

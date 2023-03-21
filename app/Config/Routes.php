@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use App\Controllers\Auth;
+
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
@@ -28,6 +30,8 @@ $routes->set404Override();
  */
 
  $routes->get('/login','Auth::login');
+ $routes->get('/login/auth/google', 'Auth::loginGoogle');
+ $routes->get('/login/auth/google/callback' , 'Auth::googleCallback');
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.

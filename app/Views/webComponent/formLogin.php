@@ -45,9 +45,9 @@
           <form>
             <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
               <p class="lead fw-normal mb-0 me-3">Masuk Dengan Media Sosial</p>
-              <button type="button" class="btn btn-primary btn-floating mx-1">
+              <a type="button" href="<?= base_url('/login/auth/google') ?>" class="btn btn-primary btn-floating mx-1">
                 <i class="fab fa-google"></i>
-              </button>
+              </a>
 
               <button type="button" class="btn btn-primary btn-floating mx-1">
                 <i class="fab fa-instagram"></i>

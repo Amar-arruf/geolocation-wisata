@@ -8,7 +8,8 @@
     "php": "^7.4 || ^8.0",
     "cloudinary/cloudinary_php": "^2.10",
     "codeigniter4/framework": "^4.0",
-    "google/apiclient": "^2.12.1"
+    "google/apiclient": "^2.12.1",
+    "vlucas/phpdotenv": "^5.5"
   },
   "require-dev": {
     "fakerphp/faker": "^1.9",
