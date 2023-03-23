@@ -49,13 +49,13 @@
                 <i class="fab fa-google"></i>
               </a>
 
-              <button type="button" class="btn btn-primary btn-floating mx-1">
+              <a type="button" class="btn btn-primary btn-floating mx-1">
                 <i class="fab fa-instagram"></i>
-              </button>
+              </a>
 
-              <button type="button" class="btn btn-primary btn-floating mx-1">
+              <a type="button" class="btn btn-primary btn-floating mx-1">
                 <i class="fab fa-tiktok"></i>
-              </button>
+              </a>
             </div>
 
             <div class="divider d-flex align-items-center my-4">
