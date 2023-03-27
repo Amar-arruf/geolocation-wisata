@@ -32,6 +32,8 @@ $routes->set404Override();
  $routes->get('/login','Auth::login');
  $routes->get('/login/auth/google', 'Auth::loginGoogle');
  $routes->get('/login/auth/google/callback' , 'Auth::googleCallback');
+ $routes->get('/login/auth/ig', 'Auth::loginInstagram');
+ $routes->get('/login/auth/ig/callback', 'Auth::instagramCallback');
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
