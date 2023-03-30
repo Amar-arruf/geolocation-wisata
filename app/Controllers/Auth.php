@@ -59,18 +59,18 @@ class Auth extends BaseController {
 
     // check jika ada token di database dan token accses tidak sama  maka update
     if (isset($getTokenGoogel) && $data["accessToken"]["access_token"] !== $getTokenGoogel[0]["ACCESS_TOKEN"]) {
-      echo "data token sudah dan diupdate!";
-
+      
       $updateToken = $userToken->updateTokenDB(json_decode(json_encode($data["userProfile"]['id'])),$data["accessToken"]["access_token"]);
 
       if($updateToken === "token berhasil di update") {
         var_dump($getTokenGoogel);
+        echo "data token sudah dan diupdate!";
       } else {
         echo "gagal diupdate token";
       }
     }  else {
       //  simpan ke database
-      $message = $userToken->addToken($data["accessToken"], json_decode(json_encode($data["userProfile"]["id"])));
+      $message = $userToken->addToken($data["accessToken"], json_decode(json_encode($data["userProfile"]["id"])),"Google");
       echo $message;
     }
   }
@@ -87,6 +87,46 @@ class Auth extends BaseController {
   {
     $IGOauth = new Oauth2Instagram();
     // jalankan metode authorization untuk menukarkan kode ke dalam acces tokken 
-    $IGOauth->Authorization();
+    $data = $IGOauth->Authorization();
+
+    var_dump($data["token"]);
+
+    
+    $userLoginIG = new UserLogin();
+    $userTokenIG = new UserToken();
+
+    // Simpan ke database user account dan Token 
+
+    $getUserID = $userLoginIG->getUserLogin($data["user"]->toArray()["id"]);
+    $getUserToken =  $userTokenIG->getTokenUser($data["user"]->toArray()["id"]);
+
+  
+    // check kembalian dari variabel $getUserID
+    if (is_array($getUserID)) {
+      echo "data sudah ada";
+       var_dump($getUserID);
+    } else {
+      $addUser = $userLoginIG->addUser($data["user"]->toArray(),"Instagram");
+      echo $addUser;
+    }
+
+    // check jika ada token di database dan token accses tidak sama  maka update
+
+    if(is_array($getUserToken) && $data["token"]->getToken() !== $getUserToken[0]["ACCESS_TOKEN"]) {
+      
+      $updateTokenIg = $userTokenIG->updateTokenDB($data["user"]->toArray()["id"],$data["token"]->getToken());
+
+      if ($updateTokenIg === "token berhasil di update") {
+        echo "data token Instagram Sudah diupdate!";
+        var_dump($getUserToken);
+      } else {
+        var_dump("token gagal di update");
+      }
+
+    } else {
+          $addToken = $userTokenIG->addToken($data["token"],$data["user"]->toArray()["id"],"Instagram");
+          echo $addToken;
+    }
+
   }
 }

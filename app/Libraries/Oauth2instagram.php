@@ -1,15 +1,16 @@
 <?php 
 namespace App\Libraries;
 
-
 use League\OAuth2\Client\Provider\Instagram;
 
 class Oauth2Instagram {
   private $private;
 
-  public $options;
+  private $options;
   
-  public $session;
+  private $session;
+
+
 
   public function __construct()
   {
@@ -60,16 +61,19 @@ class Oauth2Instagram {
 
         // We got an access token, let's now get the user's details
         $user = $this->private->getResourceOwner($token);
-        
+
 
 
         // Use these details to create a new profile
-        var_dump('Hello %s!', $user, $token);
+        return [
+          "user" => $user,
+          "token" => $token
+        ];
 
       } catch (\Exception $e) {
 
         // gagal mendapatkan 
-        exit('tidak bisa mendapatkan detail user');
+         return exit('tidak bisa mendapatkan detail user');
       }
 
     // Use this to interact with an API on the users behalf
@@ -98,6 +102,9 @@ class Oauth2Instagram {
     $longLivedToken = $this->private->getLongLivedAccessToken($token);
 
     $refreshToken = $this->private->getRefreshedAccessToken($longLivedToken);
+    return $refreshToken;
   }
+
+
 
 }

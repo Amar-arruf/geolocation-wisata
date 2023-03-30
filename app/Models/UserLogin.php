@@ -33,15 +33,25 @@ class UserLogin extends Model
        }
     }
 
-    public function addUser($arr) 
+    public function addUser($arr, $typeLogin= "Google") 
     {
-        $data = [
-            "ID_USER" => $arr['id'],
-            "USERNAME" => $arr['name'] ,
-            "GAMBAR_PROFIL" => $arr['picture'],
-            "EMAIL" => $arr['email']
-        ];
+        $data = [];
 
+        if ($typeLogin === "Google") {
+            $data = [
+                "ID_USER" => $arr['id'],
+                "USERNAME" => $arr['name'] ,
+                "GAMBAR_PROFIL" => $arr['picture'],
+                "EMAIL" => $arr['email']
+            ];  
+        }else {
+            $data = [
+                "ID_USER" => $arr['id'],
+                "USERNAME" => $arr['username'] ,
+                "GAMBAR_PROFIL" => null,
+                "EMAIL" => null
+            ];
+        }
 
         $queryBuilder = $this->db->table($this->table)->insert($data);
 
