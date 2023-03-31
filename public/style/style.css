@@ -53,14 +53,14 @@
 
 #sidebarmodal {
   top: 102px;
-  left: 30px;
+  left: 11px;
   content: "";
-  width: 25%;
+  width: 20rem;
   height: 40vh;
 }
 
 #sidebarmodal .bg-primary h6 {
-  letter-spacing: 5px;
+  letter-spacing: 3px;
   font-weight: 700;
 }
 
@@ -98,8 +98,8 @@
 
 .modalClass {
   top: 102px;
-  left: 30px;
+  left: 11px;
   height: 80vh;
-  width: 25%;
+  width: 20rem;
   transition: all 1ms ease;
 }

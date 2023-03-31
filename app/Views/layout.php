@@ -13,8 +13,8 @@
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
     <!-- CSS Custom -->
-    <link rel="stylesheet" href="<?= base_url('style/style.css') ?>">
     <link rel="stylesheet" href="https://vjs.zencdn.net/8.0.4/video-js.css">
+    <link rel="stylesheet" href="<?= base_url('style/style.css')?>">
 </head>
 <body>
     <!-- navbar -->
@@ -93,12 +93,20 @@
        
     })
 
-   
-
+ 
     function getModalDetail(id) {
        // tangkap element modal detail
-    const elementModal = document.getElementById(id);
+      const elementModal = document.getElementById(id);
 
+      const Modals =document.getElementsByClassName('modalClass');
+      
+      for (const item of Modals) {
+        if(!item.classList.contains('d-none')) {
+            item.classList.add("d-none");
+            break;
+        }
+        
+      }
         if (elementModal.classList.contains("d-none")) {
           elementModal.classList.remove("d-none");
         } else {
@@ -107,7 +115,6 @@
       }
 
     function addMarker() {
-      let i =0
         // tampilkan data GeoJSON DOM HTML
         for (const marker of stores.features) {
           const el = document.createElement('div');
@@ -124,10 +131,9 @@
               flyToStore(marker)
               // tutup semua popup yang lain dan tampilkan popup point yang di kliked
               createPopUp(marker)
-              // tampilkan detail modal
+              // tampilkan detail modal dan modal sebelumnya di nonaktifkan
               getModalDetail(marker.properties["ID"])
             })
-            i++;
         }
     }
 
@@ -173,7 +179,7 @@
             <div class="card-body d-flex justify-content-between align-items-center">
               <div class="card-title">
                   <p class= "fw-bold" >${data.properties["ID"]}</p>
-                  <p class="card-subtitle mb-2 text-muted">${data.properties["NAMA"]}</p>
+                  <p class="card-subtitle mb-2 text-muted fw-semibold" style="font-size: 0.9rem">${data.properties["NAMA"]}</p>
               </div>
               <button class="btn btn-primary Detail">Detail</button>
             </div>
@@ -245,10 +251,6 @@
           
         })
       }
-
-      
-      
-
     }
     </script>
 </body>
