@@ -8,6 +8,7 @@ class getLocationDash extends Model
 {
 
     protected $db;
+    protected $table            = 'profil_wisata';
 
     public function __construct()
     {
@@ -42,5 +43,18 @@ class getLocationDash extends Model
 
        return $query->getResultArray();
        
+    }
+
+    public function getAllDataWithoutJoin() {
+      $builder = $this->findAll();
+
+      return $builder;
+    }
+
+    public function search($keyword)
+    {
+        $builder = $this->table($this->table);
+        $builder->like('NAMA', $keyword); // Kolom yang ingin dicari
+        return $builder;
     }
 }

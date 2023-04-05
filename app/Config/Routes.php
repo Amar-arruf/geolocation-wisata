@@ -38,7 +38,14 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
-$routes->get('/dashboard', 'Dashboard::dashboard');
+$routes->get('/Dashboard/dashboard', 'Dashboard::dashboard');
+$routes->get('/Dashboard/tambahsport', 'TambahSpot::index');
+$routes->get('/Dashboard/tabelwisata', 'TabelWisata::index');
+$routes->get('/Dashboard/gps', 'GPS::index');
+$routes->get('/Dashboard/bukatutup', 'BukaTutup::index');
+$routes->get('/Dashboard/harioperasi', 'HariOperasional::index');
+
+$routes->get('/Dashboard/tabelwisata/search', 'Tabelwisata::search');
 
 /*
  * --------------------------------------------------------------------

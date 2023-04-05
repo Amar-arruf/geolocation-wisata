@@ -5,7 +5,7 @@
 <div class="container-fluid mt-5">
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 fw-bold mb-0 text-gray-800">Selmat Datang di Halaman Dashboard</h1>
+      <h1 class="h3 fw-bold mb-0 text-gray-800">Selamat Datang di Halaman Dashboard</h1>
       <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
               class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
   </div>
@@ -18,9 +18,9 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="fs-5 font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="text-sm font-weight-bold text-primary text-uppercase mb-1">
                             Total wisata</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?= sizeof($data_wisata); ?></div>
                     </div>
                     <div class="col-auto">
                         <i class="fa-solid fa-map-location-dot fa-2x text-gray-400"></i>
@@ -30,37 +30,37 @@
         </div>
     </div>
 
-    <!-- jumlah kecamatan Example -->
+    <!-- jumlah wisata jauh dari pusat kota Example -->
     <div class="col-xl-4 col-md-6 mb-4">
         <div class="card border-left-success shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="fs-5 font-weight-bold text-success text-uppercase mb-1">
-                            Total Kecamatan</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">20</div>
+                        <div class="text-sm font-weight-bold text-success text-uppercase mb-1">
+                            wisata jauh dari pusat kota</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fa-solid fa-circle-dot fa-2x text-gray-400"></i>
+                        <i class="fa-solid fa-map-pin fa-2x text-gray-400"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Jumlah Desa  Example -->
+    <!-- Jumlah wisata deket pusat kota -->
     <div class="col-xl-4 col-md-6 mb-4">
         <div class="card border-left-warning shadow h-100 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="fs-5 font-weight-bold text-warning text-uppercase mb-1">
-                            Total Desa
+                        <div class="text-sm font-weight-bold text-warning text-uppercase mb-1">
+                            Wisata dekat dari pusat kota
                           </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">200</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fa-solid fa-house-chimney-crack fa-2x text-gray-400"></i>
+                        <i class="fa-solid fa-location-dot fa-2x text-gray-400"></i>
                     </div>
                 </div>
             </div>
@@ -91,5 +91,92 @@
             center: [112.06, -6.893], // starting position [lng, lat]
             zoom: 10   // starting zoom
         });
+
+        // passing data php objek ke dalam objek javascript
+        let js_Data = <?= json_encode($data_wisata) ?>;
+
+        // format geoJSON
+        let Stores = {
+        "type": "FeatureCollection",
+        "features": []
+        };
+
+        // passing js data ke dalam format GeoJSON
+        for (let i = 0; i < js_Data.length; i++) {
+        Stores.features.push( {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+            Number(js_Data[i]["LONGITUDE"]),
+            Number(js_Data[i]["ALTITUDE"])
+            ]
+        },
+        "properties": {
+            "ID": js_Data[i]["ID"],
+            "NAMA": js_Data[i]["NAMA"],
+            }
+        })
+        }
+
+    map.on('load', ()=> {
+        map.addSource('places', {
+        'type': 'geojson',
+        'data': Stores
+        });
+
+        AddMarker();
+    })
+
+    function Fly_To_Store (currentFeature) {
+        map.flyTo({
+        center: currentFeature.geometry.coordinates,
+        zoom: 18
+        });
+    }
+
+    
+    function create_Pop_Up(currentFeature) {
+        const popUps = document.getElementsByClassName('mapboxgl-popup');
+        if (popUps[0]) popUps[0].remove();
+
+        const popup = new mapboxgl.Popup({ 
+        closeOnClick: false
+        })
+        .setLngLat(currentFeature.geometry.coordinates)
+        .setHTML(
+        `<h5>nama wisata</h5><h6>${currentFeature.properties["NAMA"]}</h6>`
+        )
+        .addTo(map);
+
+        
+        popUps[0].addEventListener("click", () =>{
+        popUps[0].remove();
+        })
+    }
+
+    function AddMarker() {
+        // tampilkan data GeoJSON DOM HTML
+        for (const marker of Stores.features) {
+          const el = document.createElement('div');
+          el.id = `marker-${marker.properties["ID"]}`
+          el.className = 'marker'
+
+          new mapboxgl.Marker(el)
+              .setLngLat(marker.geometry.coordinates)
+              .addTo(map)
+
+          
+          el.addEventListener('click',()=> {
+              //terbang ke point yang di klik
+              Fly_To_Store(marker)
+              // tutup semua popup yang lain dan tampilkan popup point yang di kliked
+              create_Pop_Up(marker)
+              
+            })
+        }
+    }
+
+
 </script>
 <?= $this->endSection() ?>
