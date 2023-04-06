@@ -1,7 +1,10 @@
 <?= $this->extend('Dashboard/layout'); ?>
 
+<?php $session = \Config\Services::session(); ?>
+
 <?= $this->section('content') ?>
   <div class="container-fluid">
+  <div id="flash" data-flash="<?= $session->getFlashdata('success') ?>"></div>
       <!-- data tables example -->
       <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -38,7 +41,7 @@
                     <td class="text"><?= substr($row["DESKRIPSI_TEXT"],0,40); ?>...</td>
                     <td class="text"><?= $row["GAMBAR"]; ?></td>
                     <td>
-                      <a href="#" class="btn btn-success btn-sm btn-icon-split">
+                      <a href="#" class="btn btn-success btn-sm btn-icon-split" type="button" data-bs-toggle="modal" data-bs-target="#EditModal-<?= $row["ID"] ?>">
                           <span class="icon text-white-50">
                               <i class="fas fa-pen-to-square"></i>
                           </span>
@@ -50,9 +53,47 @@
                           </span>
                           <span class="text">Hapus</span>
                       </a>
-
                     </td>
                   </tr>
+                  <!-- modal edit -->
+                  <div class="modal fade" id="EditModal-<?= $row["ID"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title font-weight-bold text-gray-800" id="exampleModalLabel">Edit Wisata dengan ID <?= $row["ID"]; ?></h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="<?= base_url('/Dashboard/tabelwisata/'.$row["ID"].'/edit')?>" method="post" enctype="multipart/form-data">
+                            <div class="mb-3">
+                              <label for="formControlID" class="form-label">id</label>
+                              <input type="text" class="form-control" name="id" id="formControlID" placeholder="ID" value="<?= $row["ID"] ?>" disabled readonly>
+                            </div>
+                            <div class="mb-3">
+                              <label for="formControlname" class="form-label">Nama Wisata</label>
+                              <input type="text" class="form-control" name="nama" id="formControlname" placeholder="Nama Wisata" value="<?= $row["NAMA"] ?>">
+                            </div>
+                            <div class="mb-3">
+                              <label for="formControlVideo" class="form-label">Video</label>
+                              <input type="file" class="form-control" name="video" id="formControlVideo" placeholder="Video beserta ekstensi sesuai diupload di cloaud" value="<?= $row["VIDEO"] ?>">
+                            </div>
+                            <div class="mb-3">
+                              <label for="formControlDesc" class="form-label">Deskripsi Text</label>
+                              <textarea class="form-control" name="desc" id="formControlDesc" placeholder="Berikan Desc Wisata" rows="3"><?= $row["DESKRIPSI_TEXT"] ?></textarea>
+                            </div>
+                            <div class="mb-3">
+                              <label for="formControlGambar" class="form-label">Gambar</label>
+                              <input type="file" class="form-control" name="gambar" id="formControlGambar" placeholder="file Gambar beserta ekstensi yang disimpan di cloud" value="<?= $row["GAMBAR"] ?>">
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">tutup</button>
+                              <button type="submit" class="btn btn-success">Simpan</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 <?php endforeach;?>
               </tbody>
             </table>
@@ -62,5 +103,18 @@
         </div>
       </div>
   </div>
+
+  <script>
+    var flash = document.getElementById('flash');
+    var data = flash.getAttribute('data-flash');
+
+    if (data) {
+      Swal.fire(
+        'Good job!',
+        data,
+        'success'
+      )
+    }
+  </script>
 
 <?= $this->endSection(); ?>

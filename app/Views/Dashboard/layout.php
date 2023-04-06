@@ -18,6 +18,8 @@
 
   <!-- Custom  style untuk dashboard-->
   <link rel="stylesheet" href="<?= base_url('style/sb-admin-2.min.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('style/sweetalert2.min.css'); ?>">
+  <script src="<?= base_url('js/sweetalert2.min.js'); ?>"></script>
 
   <!-- Custom style own -->
   <link rel="stylesheet" href="<?= base_url('style/styleDashboard.css') ?>">
@@ -56,6 +58,7 @@
   <script src="<?= base_url('vendorCustom/jquery-easing/jquery.easing.min.js')?>"></script>
   <!-- JS sbadmin2 -->
   <script src="<?= base_url('js/sb-admin-2.min.js'); ?>"></script>
+  
 
   <script src="<?= base_url('vendorCustom/datatables/jquery.dataTables.min.js') ?>"></script>
   <script src="<?= base_url('vendorCustom/datatables/dataTables.bootstrap4.min.js') ?>"></script>

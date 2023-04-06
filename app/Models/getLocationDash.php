@@ -9,6 +9,9 @@ class getLocationDash extends Model
 
     protected $db;
     protected $table            = 'profil_wisata';
+   //  protected $primaryKey       = 'id';
+    protected $useAutoIncrement = false;
+    protected $allowedFields = ['NAMA', 'VIDEO', 'DESKRIPSI_TEXT','GAMBAR'];
 
     public function __construct()
     {
@@ -56,5 +59,30 @@ class getLocationDash extends Model
         $builder = $this->table($this->table);
         $builder->like('NAMA', $keyword); // Kolom yang ingin dicari
         return $builder;
+    }
+
+    public function edit ($id) 
+    {
+      $data= [];
+      if (strlen($_FILES["gambar"]["name"]) !== 0) {
+         $data = [
+            'NAMA' => $_POST["nama"],
+            'DESKRIPSI_TEXT'    => $_POST["desc"],
+            'GAMBAR'    => $_FILES["gambar"]["name"]
+         ];
+      } else if (strlen($_FILES["video"]["name"]) !== 0) {
+         $data = [
+            'NAMA' => $_POST["nama"],
+            'VIDEO'    => $_FILES["video"]["name"],
+            'DESKRIPSI_TEXT'    => $_POST["desc"],
+         ];
+      } else {
+         $data = [
+            'NAMA' => $_POST["nama"],
+            'DESKRIPSI_TEXT'    => $_POST["desc"],
+        ];
+      }
+     
+       return $this->update($id,$data);
     }
 }

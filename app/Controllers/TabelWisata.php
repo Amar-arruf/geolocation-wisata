@@ -60,4 +60,46 @@ class TabelWisata extends BaseController
 
       return view('Dashboard/Page/tabelwisata',$data);
     }
+
+    public function edit ($id)
+    {
+      $getWisata = new getLocationDash();
+      $responseEdit = $getWisata->edit($id);
+
+     // ambil file gambar dan video dari Form 
+      $getGambarFile = $this->request->getFile('gambar');
+      $getVideoFile = $this->request->getFile('video');
+
+      
+
+      // check response Edit berhasil di update di database dan terdapat file nya 
+      if ($responseEdit) {
+          $uploadGambar = null;
+          $uploadVideo = null;
+        if (strlen($_FILES["gambar"]["name"]) !== 0 ) {
+          // upload File Gambar
+            $uploadGambar = $this->Cloudinary->Upload($getGambarFile->getTempName(),[
+            'public_id' => 'foto_geoloccation/'.$getGambarFile->getBasename()// Nama file di Cloudinary
+            ]);
+        }
+        if (strlen($_FILES["video"]["name"]) !== 0 ) {
+           // upload File Video
+            $uploadVideo = $this->Cloudinary->Upload($getVideoFile->getTempName(),[
+              'public_id' => 'Video_geolocation/'.$getVideoFile->getBasename(),// Nama file di Cloudinary
+              'resource_type' => 'video'
+          ]);
+        }
+        
+       
+
+        if (!json_decode($uploadGambar) === null & !json_decode($uploadVideo) === null) 
+        {
+          return redirect()->to('/Dashboard/tabelwisata')->with('success', 'data berhasil ditambahkan');
+        }
+        return redirect()->to('/Dashboard/tabelwisata')->with('success', 'data berhasil ditambahkan');
+      }
+
+       
+
+    }
 }

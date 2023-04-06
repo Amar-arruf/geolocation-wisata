@@ -46,6 +46,7 @@ $routes->get('/Dashboard/bukatutup', 'BukaTutup::index');
 $routes->get('/Dashboard/harioperasi', 'HariOperasional::index');
 
 $routes->get('/Dashboard/tabelwisata/search', 'Tabelwisata::search');
+$routes->post('/Dashboard/tabelwisata/(:segment)/edit', 'Tabelwisata::edit/$1');
 
 /*
  * --------------------------------------------------------------------
