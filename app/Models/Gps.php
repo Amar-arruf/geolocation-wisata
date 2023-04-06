@@ -18,7 +18,7 @@ class Gps extends Model
 
     public function search ($keyword)
     {
-        return $this->builder($this->table)->like("ID", $keyword);
+        return $this->builder($this->table)->like('ID', $keyword);
     }
 
     public function edit($id)
@@ -27,7 +27,7 @@ class Gps extends Model
             "ID" => $_POST["kode_wisata"],
             "KODE_POS" => $_POST["kode_pos"],
             "LONGITUDE" => $_POST["longitude"],
-            "ALTITUDE" => $_POST["alltitude"],
+            "ALTITUDE" => $_POST["altitude"],
 
         ];
 

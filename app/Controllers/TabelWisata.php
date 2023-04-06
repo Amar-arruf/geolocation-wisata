@@ -94,9 +94,11 @@ class TabelWisata extends BaseController
 
         if (!json_decode($uploadGambar) === null & !json_decode($uploadVideo) === null) 
         {
-          return redirect()->to('/Dashboard/tabelwisata')->with('success', 'data berhasil ditambahkan');
+          return redirect()->to('/Dashboard/tabelwisata')->with('success', 'data berhasil di edit');
+        } else {
+          return redirect()->to('/Dashboard/tabelwisata')->with('success', 'data berhasil di edit');
         }
-        return redirect()->to('/Dashboard/tabelwisata')->with('success', 'data berhasil ditambahkan');
+        return redirect()->to('/Dashboard/tabelwisata')->with('failed', 'data gagal di edit');
       }
 
        

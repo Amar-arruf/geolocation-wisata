@@ -3,6 +3,7 @@
 namespace Config;
 
 use App\Controllers\Auth;
+use App\Controllers\GPS;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
@@ -48,6 +49,8 @@ $routes->get('/Dashboard/harioperasi', 'HariOperasional::index');
 $routes->get('/Dashboard/tabelwisata/search', 'Tabelwisata::search');
 $routes->post('/Dashboard/tabelwisata/(:segment)/edit', 'Tabelwisata::edit/$1');
 
+$routes->get("/Dasgboard/gps/search", "GPS::search");
+$routes->post('/Dashboard/gps/(:segment)/edit', 'GPS::edit/$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing
