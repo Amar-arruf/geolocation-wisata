@@ -92,7 +92,7 @@ class TabelWisata extends BaseController
         
        
 
-        if (!json_decode($uploadGambar) === null & !json_decode($uploadVideo) === null) 
+        if (!json_decode($uploadGambar) === null && !json_decode($uploadVideo) === null) 
         {
           return redirect()->to('/Dashboard/tabelwisata')->with('success', 'data berhasil di edit');
         } else {
