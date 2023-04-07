@@ -51,6 +51,12 @@ $routes->post('/Dashboard/tabelwisata/(:segment)/edit', 'Tabelwisata::edit/$1');
 
 $routes->get("/Dasgboard/gps/search", "GPS::search");
 $routes->post('/Dashboard/gps/(:segment)/edit', 'GPS::edit/$1');
+
+$routes->get("Dashboard/bukatutup/search", "BukaTutup::search");
+$routes->post("/Dashboard/bukatutup/(:segment)/edit", "BukaTutup::edit/$1");
+
+$routes->get("Dashboard/harioperasi/search","HariOperasional::search");
+$routes->post("/Dashboard/harioperasi/(:segment)/edit", "HariOpersional::edit/$1");
 /*
  * --------------------------------------------------------------------
  * Additional Routing

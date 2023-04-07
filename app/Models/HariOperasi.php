@@ -28,6 +28,7 @@ class HariOperasi extends Model
             "KODE_POS" => $_POST["kode_pos"],
             "KODE_UPLOADER" =>$_POST["kode_uploader"],
             "ID" => $_POST["id_wisata"],
+            "KODE_JAM_OPERASI" => $_POST["kode_jam"],
             "HARI_OPERASIONAL" => $_POST["hari_operasional"]
         ];
 
