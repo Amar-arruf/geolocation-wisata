@@ -54,3 +54,11 @@
 .text {
   font-size: 0.9em !important;
 }
+
+/* form tambah spot */
+
+.message {
+  content: "";
+  height: 30px !important;
+  background-color: #dde0de;
+}

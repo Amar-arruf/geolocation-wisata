@@ -30,11 +30,11 @@ $routes->set404Override();
  * --------------------------------------------------------------------
  */
 
- $routes->get('/login','Auth::login');
- $routes->get('/login/auth/google', 'Auth::loginGoogle');
- $routes->get('/login/auth/google/callback' , 'Auth::googleCallback');
- $routes->get('/login/auth/ig', 'Auth::loginInstagram');
- $routes->get('/login/auth/ig/callback', 'Auth::instagramCallback');
+$routes->get('/login', 'Auth::login');
+$routes->get('/login/auth/google', 'Auth::loginGoogle');
+$routes->get('/login/auth/google/callback', 'Auth::googleCallback');
+$routes->get('/login/auth/ig', 'Auth::loginInstagram');
+$routes->get('/login/auth/ig/callback', 'Auth::instagramCallback');
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
@@ -46,6 +46,8 @@ $routes->get('/Dashboard/gps', 'GPS::index');
 $routes->get('/Dashboard/bukatutup', 'BukaTutup::index');
 $routes->get('/Dashboard/harioperasi', 'HariOperasional::index');
 
+$routes->post('/Dashboard/tambahsport/add', "TambahSpot::add");
+
 $routes->get('/Dashboard/tabelwisata/search', 'Tabelwisata::search');
 $routes->post('/Dashboard/tabelwisata/(:segment)/edit', 'Tabelwisata::edit/$1');
 
@@ -55,7 +57,7 @@ $routes->post('/Dashboard/gps/(:segment)/edit', 'GPS::edit/$1');
 $routes->get("Dashboard/bukatutup/search", "BukaTutup::search");
 $routes->post("/Dashboard/bukatutup/(:segment)/edit", "BukaTutup::edit/$1");
 
-$routes->get("Dashboard/harioperasi/search","HariOperasional::search");
+$routes->get("Dashboard/harioperasi/search", "HariOperasional::search");
 $routes->post("/Dashboard/harioperasi/(:segment)/edit", "HariOpersional::edit/$1");
 /*
  * --------------------------------------------------------------------

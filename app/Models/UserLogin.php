@@ -19,35 +19,35 @@ class UserLogin extends Model
         $this->db = \Config\Database::connect();
     }
 
-    public function getUserLogin ($id)  
+    public function getUserLogin($id)
     {
         // mencegah serangan SQL injection 
-       $data = $this->db->table($this->table)->where('ID_USER', $this->db->escapeString($id))->get();
-       $getData = $data->getResultArray();
-       
+        $data = $this->db->table($this->table)->where('ID_USER', $id)->get();
+        $getData = $data->getResultArray();
 
-       if (count($getData) >= 1) {
-        return $getData;
-       } else {
-        return "data tidak ditemukan ";
-       }
+
+        if (count($getData) >= 1) {
+            return $getData;
+        } else {
+            return "data tidak ditemukan ";
+        }
     }
 
-    public function addUser($arr, $typeLogin= "Google") 
+    public function addUser($arr, $typeLogin = "Google")
     {
         $data = [];
 
         if ($typeLogin === "Google") {
             $data = [
                 "ID_USER" => $arr['id'],
-                "USERNAME" => $arr['name'] ,
+                "USERNAME" => $arr['name'],
                 "GAMBAR_PROFIL" => $arr['picture'],
                 "EMAIL" => $arr['email']
-            ];  
-        }else {
+            ];
+        } else {
             $data = [
                 "ID_USER" => $arr['id'],
-                "USERNAME" => $arr['username'] ,
+                "USERNAME" => $arr['username'],
                 "GAMBAR_PROFIL" => null,
                 "EMAIL" => null
             ];
@@ -59,8 +59,6 @@ class UserLogin extends Model
             return "data berhasil ditambahkan di database";
         } else {
             return "data gagal ditambahkan";
-        }   
-
+        }
     }
-
 }

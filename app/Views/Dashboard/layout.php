@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +12,7 @@
   <link rel="stylesheet" type="text/css" href="<?= base_url('vendorCustom/fontawesome-free/css/all.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('bootstrap/css/bootstrap.min.css') ?>">
   <!-- Google Font Custom -->
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <!-- menyambungkan mapbox css dan js  -->
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
@@ -20,17 +21,19 @@
   <link rel="stylesheet" href="<?= base_url('style/sb-admin-2.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('style/sweetalert2.min.css'); ?>">
   <script src="<?= base_url('js/sweetalert2.min.js'); ?>"></script>
+  <script src="<?= base_url('js/exif.js') ?>"></script>
 
   <!-- Custom style own -->
   <link rel="stylesheet" href="<?= base_url('style/styleDashboard.css') ?>">
 
 </head>
+
 <body id="page-top">
 
   <!-- page wrapper -->
   <div id="wrapper">
     <!-- include component navbar -->
-    <?= $this ->include("Dashboard/sidebar");?>
+    <?= $this->include("Dashboard/sidebar"); ?>
     <!-- akhir component navbar -->
 
     <!--Content Wrapper -->
@@ -50,18 +53,19 @@
   </div>
 
   <!-- JQuery  -->
-  <script src="<?= base_url('vendorCustom/jquery/jquery.min.js')?>"></script>
+  <script src="<?= base_url('vendorCustom/jquery/jquery.min.js') ?>"></script>
   <!-- js boostrap -->
-  <script src="<?= base_url('vendorCustom/bootstrap/js/bootstrap.bundle.min.js') ?>" ></script>
-  <script src="<?= base_url('bootstrap/js/bootstrap.bundle.min.js') ?>" ></script>
+  <script src="<?= base_url('vendorCustom/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+  <script src="<?= base_url('bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
   <!-- jquery plugins -->
-  <script src="<?= base_url('vendorCustom/jquery-easing/jquery.easing.min.js')?>"></script>
+  <script src="<?= base_url('vendorCustom/jquery-easing/jquery.easing.min.js') ?>"></script>
   <!-- JS sbadmin2 -->
   <script src="<?= base_url('js/sb-admin-2.min.js'); ?>"></script>
-  
+
 
   <script src="<?= base_url('vendorCustom/datatables/jquery.dataTables.min.js') ?>"></script>
   <script src="<?= base_url('vendorCustom/datatables/dataTables.bootstrap4.min.js') ?>"></script>
   <script src="<?= base_url('js/datatables-demo.js') ?>"></script>
 </body>
+
 </html>
