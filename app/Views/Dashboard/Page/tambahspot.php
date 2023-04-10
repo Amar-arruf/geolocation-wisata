@@ -34,7 +34,7 @@
             <div class="col mr-2">
               <div class="text-sm font-weight-bold text-warning text-uppercase mb-1">
                 entry spot</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= isset($_COOKIE["upload_cookie"]) ? $_COOKIE["upload_cookie"] : 0; ?></div>
             </div>
             <div class="col-auto">
               <i class="fa-solid fa-map-pin fa-2x text-gray-400"></i>

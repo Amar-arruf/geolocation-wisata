@@ -124,7 +124,32 @@ class TambahSpot extends BaseController
     // tambah data hari operasional
     $responseADDDayOP =  $this->conn->table('hari_operasional_wisata')->insert($dataUpDO);
 
-    if ($responseAddWisata && $responseaddGPS && $responseAddUpload && $responseADDDayOP) {
+    // setnama Cookie
+    $nama_cookie = "upload_cookie";
+
+    $getGambar = $this->request->getFile("image");
+
+    $publicId = pathinfo($getGambar->getName(), PATHINFO_FILENAME);
+
+    // mengupload ke dalam Cloaudinary
+    $optionConf = [
+      "public_id" => 'foto_geoloccation/' . $publicId,
+    ];
+
+    $responseUploadImageToCloaud = $this->Cloudinary->Upload($getGambar->getTempName(), $optionConf);
+
+
+
+    if ($responseAddWisata && $responseaddGPS && $responseAddUpload && $responseADDDayOP && ($responseUploadImageToCloaud && !is_null($responseUploadImageToCloaud))) {
+      // set cookie dan check Cookie dengan nama "upload_cookie"
+      if (!isset($_COOKIE["upload_cookie"])) {
+        $cookie_value = 1;
+        setcookie($nama_cookie, $cookie_value, time() + 86400, "/");
+      } else {
+        $cookie_value = ++$_COOKIE["upload_cookie"];
+        setcookie($nama_cookie, $cookie_value, time() + 86400, "/");
+      }
+
       return redirect()->to('/Dashboard/tambahsport');
     }
   }

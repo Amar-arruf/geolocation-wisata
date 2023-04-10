@@ -37,7 +37,7 @@
                         <div class="col mr-2">
                             <div class="text-sm font-weight-bold text-success text-uppercase mb-1">
                                 wisata jauh dari pusat kota</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="Jauh"></div>
                         </div>
                         <div class="col-auto">
                             <i class="fa-solid fa-map-pin fa-2x text-gray-400"></i>
@@ -56,7 +56,7 @@
                             <div class="text-sm font-weight-bold text-warning text-uppercase mb-1">
                                 Wisata dekat dari pusat kota
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="Dekat"></div>
                         </div>
                         <div class="col-auto">
                             <i class="fa-solid fa-location-dot fa-2x text-gray-400"></i>
@@ -80,7 +80,7 @@
         </div>
     </div>
 </div>
-
+<script src='https://unpkg.com/@turf/turf@6.5.0/turf.min.js'></script>
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoiYW1hcmFycnVmMjQiLCJhIjoiY2xldGdjNnR4MWZ3cTN2cDQ5djduZmUxNyJ9.PXQDnSL6qVCGg1OX63BZ7A'
     const map = new mapboxgl.Map({
@@ -117,6 +117,22 @@
             }
         })
     }
+    // membuat daftar titik wisata yang akan di check
+    let points = [];
+    for (const item of Stores.features) {
+        points.push([item.geometry.coordinates[0], item.geometry.coordinates[1]]);
+    }
+
+    // membuat circle polygon circular
+    const circlePusat = [112.06, -6.893]
+    const circleRadius = 5.5 // dalam km
+
+    const options = {
+        steps: 64,
+        units: 'kilometers'
+    }
+
+    const circle = turf.circle(circlePusat, circleRadius, options);
 
     map.on('load', () => {
         map.addSource('places', {
@@ -124,7 +140,44 @@
             'data': Stores
         });
 
+        map.addLayer({
+            id: 'circle-layer',
+            type: 'fill',
+            source: {
+                type: 'geojson',
+                data: circle
+            },
+            paint: {
+                'fill-color': '#10f8cb',
+                'fill-opacity': 0.2,
+                'fill-outline-color': 'green',
+            }
+        });
+
         AddMarker();
+
+        // tangkap element jauh dari pusat kota 
+        const ElJauh = document.getElementById("Jauh");
+        // tangkap element dekat dari pusat kota 
+        const ElDekat = document.getElementById("Dekat");
+
+        // count
+        let CountDekat = 0;
+        let CountJauh = 0;
+
+
+
+        points.forEach((value, index) => {
+            let point = turf.point(value); //titik yang akan diperiksa
+            let isInside = turf.booleanPointInPolygon(point, circle); // periksa apakah titik berada di dalam lingkaran
+            if (isInside) {
+                CountDekat += 1;
+                ElDekat.innerText = CountDekat;
+            } else {
+                CountJauh += 1;
+                ElJauh.innerText = CountJauh;
+            }
+        })
     })
 
     function Fly_To_Store(currentFeature) {

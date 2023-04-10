@@ -1,30 +1,31 @@
-<?php 
+<?php
 
 namespace App\Models;
 
 use CodeIgniter\Model;
 
-class getLocationDash extends Model 
+class getLocationDash extends Model
 {
 
-    protected $db;
-    protected $table            = 'profil_wisata';
+   protected $db;
+   protected $table            = 'profil_wisata';
    //  protected $primaryKey       = 'id';
-    protected $useAutoIncrement = false;
-    protected $allowedFields = ['NAMA', 'VIDEO', 'DESKRIPSI_TEXT','GAMBAR'];
+   protected $useAutoIncrement = false;
+   protected $allowedFields = ['NAMA', 'VIDEO', 'DESKRIPSI_TEXT', 'GAMBAR'];
 
-    public function __construct()
-    {
+   public function __construct()
+   {
       parent::__construct();
       // connect Database
       $this->db = \Config\Database::connect();
-    }
+   }
 
-    public function getAllDataWisata () {
-       /*
+   public function getAllDataWisata()
+   {
+      /*
           menampilkan data wisata
        */
-         $query = $this->db->query('
+      $query = $this->db->query('
          SELECT 
             profil_wisata.ID, 
             profil_wisata.NAMA, 
@@ -44,26 +45,26 @@ class getLocationDash extends Model
             ON gps.ID = profil_wisata.ID;
          ');
 
-       return $query->getResultArray();
-       
-    }
+      return $query->getResultArray();
+   }
 
-    public function getAllDataWithoutJoin() {
+   public function getAllDataWithoutJoin()
+   {
       $builder = $this->findAll();
 
       return $builder;
-    }
+   }
 
-    public function search($keyword)
-    {
-        $builder = $this->table($this->table);
-        $builder->like('NAMA', $keyword); // Kolom yang ingin dicari
-        return $builder;
-    }
+   public function search($keyword)
+   {
+      $builder = $this->table($this->table);
+      $builder->like('NAMA', $keyword); // Kolom yang ingin dicari
+      return $builder;
+   }
 
-    public function edit ($id) 
-    {
-      $data= [];
+   public function edit($id)
+   {
+      $data = [];
       if (strlen($_FILES["gambar"]["name"]) !== 0) {
          $data = [
             'NAMA' => $_POST["nama"],
@@ -80,9 +81,9 @@ class getLocationDash extends Model
          $data = [
             'NAMA' => $_POST["nama"],
             'DESKRIPSI_TEXT'    => $_POST["desc"],
-        ];
+         ];
       }
-     
-       return $this->update($id,$data);
-    }
+
+      return $this->update($id, $data);
+   }
 }
