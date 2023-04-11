@@ -8,69 +8,85 @@ use App\Models\UserLogin;
 
 class BukaTutup extends BaseController
 {
-    public function index()
-    {
-        //
+  public function index()
+  {
+    //
 
 
 
-        $UserId = '108321858974021678564';
+    $UserId = '108321858974021678564';
 
-        $db = new UserLogin();
-        $dataLogin = $db->getUserLogin($UserId);
+    $db = new UserLogin();
+    $dataLogin = $db->getUserLogin($UserId);
 
-        $opencloseWisata = new ModelsBukaTutup();
-        $opencloseWisata->GetDatasJamOperasi();
+    $opencloseWisata = new ModelsBukaTutup();
+    $opencloseWisata->GetDatasJamOperasi();
 
 
-        if(is_array($dataLogin)) {
-            $userData = [
-              'id_user' => $dataLogin[0]["ID_USER"],
-              'username' => $dataLogin[0]["USERNAME"],
-              'poto_profil' => $dataLogin[0]["GAMBAR_PROFIL"],
-              'pageropenclose' => $opencloseWisata->paginate(3),
-              'pager' => $opencloseWisata->pager
-            ];  
-          }
-        return view('Dashboard/Page/tabelBukaTutup',$userData);
+    if (is_array($dataLogin)) {
+      $userData = [
+        'id_user' => $dataLogin[0]["ID_USER"],
+        'username' => $dataLogin[0]["USERNAME"],
+        'poto_profil' => $dataLogin[0]["GAMBAR_PROFIL"],
+        'pageropenclose' => $opencloseWisata->paginate(3),
+        'pager' => $opencloseWisata->pager
+      ];
+    }
+    return view('Dashboard/Page/tabelBukaTutup', $userData);
+  }
+
+  public function search()
+  {
+    $dataSearch = new ModelsBukaTutup();
+
+    $keyword = $this->request->getGet('keyword');
+    $dataSearch->search($keyword);
+
+    $UserId = '108321858974021678564';
+    $db = new UserLogin();
+    $dataLogin = $db->getUserLogin($UserId);
+
+    if (is_array($dataLogin)) {
+      $userData = [
+        'id_user' => $dataLogin[0]["ID_USER"],
+        'username' => $dataLogin[0]["USERNAME"],
+        'poto_profil' => $dataLogin[0]["GAMBAR_PROFIL"],
+        'pageropenclose' => $dataSearch->paginate(3),
+        'pager' => $dataSearch->pager
+      ];
     }
 
-    public function search () 
-    {
-      $dataSearch = new ModelsBukaTutup();
+    return view('Dashboard/Page/tabelBukaTutup', $userData);
+  }
 
-      $keyword = $this->request->getGet('keyword');
-      $dataSearch->search($keyword);
+  public function edit($id)
+  {
+    $getBukaTutupWisata = new ModelsBukaTutup();
+    $responseEdit = $getBukaTutupWisata->edit($id);
 
-      $UserId = '108321858974021678564';
-      $db = new UserLogin();
-      $dataLogin = $db->getUserLogin($UserId);
-
-      if(is_array($dataLogin)) {
-        $userData = [
-          'id_user' => $dataLogin[0]["ID_USER"],
-          'username' => $dataLogin[0]["USERNAME"],
-          'poto_profil' => $dataLogin[0]["GAMBAR_PROFIL"],
-          'pageropenclose' => $dataSearch->paginate(3),
-          'pager' => $dataSearch->pager
-        ];  
-      }
-
-      return view('Dashboard/Page/tabelBukaTutup',$userData);
+    // check response Edit berhasil di update di database dan terdapat file nya 
+    if ($responseEdit) {
+      return redirect()->to('/Dashboard/bukatutup')->with('success', 'data berhasil diedit');
+    } else {
+      return redirect()->to('/Dashboard/bukatutup')->with('failed', 'data gagal diupdate');
     }
+  }
 
-    public function edit ($id)
-    {
-      $getBukaTutupWisata = new ModelsBukaTutup();
-      $responseEdit = $getBukaTutupWisata->edit($id);
+  public function delete($id)
+  {
+    $delete = new ModelsBukaTutup();
 
-      // check response Edit berhasil di update di database dan terdapat file nya 
-      if ($responseEdit) {
-        return redirect()->to('/Dashboard/bukatutup')->with('success', 'data berhasil diedit');
+    try {
+      $boolDel = $delete->hapus($id);
+
+      if ($boolDel) {
+        return redirect()->to('/Dashboard/bukatutup')->with('success', 'data berhasil dihapus');
       } else {
-        return redirect()->to('/Dashboard/bukatutup')->with('failed', 'data gagal diupdate');
+        return redirect()->to('/Dashboard/bukatutup')->with('failed', 'terjadi kesalahan data');
       }
-
-
+    } catch (\Throwable $th) {
+      //throw $th;
+      return redirect()->to('/Dashboard/bukatutup')->with('failed', $th->getMessage());
     }
+  }
 }

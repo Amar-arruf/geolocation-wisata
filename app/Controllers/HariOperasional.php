@@ -79,4 +79,22 @@ class HariOperasional extends BaseController
       return redirect()->to('/Dashboard/harioperasi')->with('failed', 'data gagal diupdate');
     }
   }
+
+  public function delete($id)
+  {
+    $delete = new HariOperasi();
+
+    try {
+      $boolDel = $delete->hapus($id);
+
+      if ($boolDel) {
+        return redirect()->to('/Dashboard/harioperasi')->with('success', 'data berhasil dihapus');
+      } else {
+        return redirect()->to('/Dashboard/harioperasi')->with('failed', 'terjadi kesalahan data');
+      }
+    } catch (\Throwable $th) {
+      //throw $th;
+      return redirect()->to('/Dashboard/harioperasi')->with('failed', $th->getMessage());
+    }
+  }
 }

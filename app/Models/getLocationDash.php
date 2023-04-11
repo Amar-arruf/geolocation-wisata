@@ -86,4 +86,9 @@ class getLocationDash extends Model
 
       return $this->update($id, $data);
    }
+
+   public function hapus($id)
+   {
+      return $this->delete($id);
+   }
 }

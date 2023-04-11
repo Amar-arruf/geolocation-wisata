@@ -4,7 +4,7 @@
 
 <?= $this->section('content') ?>
 <div class="container-fluid">
-  <div id="flash" data-flash="<?= $session->getFlashdata('success') ?>"></div>
+  <div id="flash" data-flash="<?= $session->getFlashdata('success') ? $session->getFlashdata('success') : $session->getFlashdata('failed') ?>"></div>
   <!-- data tables example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -49,12 +49,12 @@
                     </span>
                     <span class="text">Edit</span>
                   </a>
-                  <a href="#" class="btn btn-danger btn-sm btn-icon-split">
+                  <button data-id="<?= $row["ID_OPERASIONAL"]; ?>" class="btn btn-danger btn-sm btn-icon-split delete">
                     <span class="icon text-white-50">
                       <i class="fas fa-trash"></i>
                     </span>
                     <span class="text">Hapus</span>
-                  </a>
+                  </button>
                 </td>
               </tr>
               <!-- modal edit -->
@@ -140,6 +140,31 @@
       data,
       'success'
     )
+  }
+</script>
+<script>
+  const buttonDeletedData = document.getElementsByClassName('delete')
+  console.log(buttonDeletedData);
+  for (const DeleteItem of buttonDeletedData) {
+    DeleteItem.addEventListener("click", (e) => {
+      e.preventDefault();
+      const getID = DeleteItem.getAttribute('data-id');
+
+
+      Swal.fire({
+        title: 'Apa kamu yakin?',
+        text: `ingin menghapus data dengan id ${getID}`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'ya, hapus itu!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `https://geolocationwisata.com/Dashboard/harioperasi/${getID}/delete`;
+        }
+      })
+    })
   }
 </script>
 <?= $this->endSection(); ?>

@@ -11,12 +11,12 @@ class BukaTutup extends Model
     protected $protectFields    = true;
     protected $allowedFields    = ["KODE_JAM_OPERASI", "JAM_OPERASIONAL"];
 
-    public function GetDatasJamOperasi () 
+    public function GetDatasJamOperasi()
     {
-         return $this->findAll();
+        return $this->findAll();
     }
 
-    public function search ($keyword)
+    public function search($keyword)
     {
         return $this->builder($this->table)->like("KODE_JAM_OPERASI", $keyword);
     }
@@ -25,9 +25,14 @@ class BukaTutup extends Model
     {
         $data = [
             "KODE_JAM_OPERASI" => $_POST["kode_jam_operasi"],
-            "JAM_OPERASIONAL" =>$_POST["jam_operasional"]
+            "JAM_OPERASIONAL" => $_POST["jam_operasional"]
         ];
 
-        return $this->update($id,$data);
+        return $this->update($id, $data);
+    }
+
+    public function hapus($id)
+    {
+        return $this->delete($id);
     }
 }

@@ -144,10 +144,10 @@ class TambahSpot extends BaseController
       // set cookie dan check Cookie dengan nama "upload_cookie"
       if (!isset($_COOKIE["upload_cookie"])) {
         $cookie_value = 1;
-        setcookie($nama_cookie, $cookie_value, time() + 86400, "/");
+        setcookie($nama_cookie, $cookie_value, strtotime('today midnight'), "/");
       } else {
         $cookie_value = ++$_COOKIE["upload_cookie"];
-        setcookie($nama_cookie, $cookie_value, time() + 86400, "/");
+        setcookie($nama_cookie, $cookie_value, strtotime('today midnight'), "/");
       }
 
       return redirect()->to('/Dashboard/tambahsport');

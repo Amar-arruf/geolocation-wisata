@@ -11,12 +11,12 @@ class Gps extends Model
     protected $protectFields    = true;
     protected $allowedFields    = ["ID", "KODE_POS", "LONGITUDE", "ALTITUDE"];
 
-    public function GetDatas () 
+    public function GetDatas()
     {
-         return $this->findAll();
+        return $this->findAll();
     }
 
-    public function search ($keyword)
+    public function search($keyword)
     {
         return $this->builder($this->table)->like('ID', $keyword);
     }
@@ -31,6 +31,11 @@ class Gps extends Model
 
         ];
 
-        return $this->update($id,$data);
+        return $this->update($id, $data);
+    }
+
+    public function hapus($id)
+    {
+        return $this->delete($id);
     }
 }

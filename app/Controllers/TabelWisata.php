@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\getLocationDash;
 use App\Models\UserLogin;
+use Exception;
 
 class TabelWisata extends BaseController
 {
@@ -119,6 +120,50 @@ class TabelWisata extends BaseController
         return redirect()->to('/Dashboard/tabelwisata')->with('success', 'data berhasil di edit');
       }
       return redirect()->to('/Dashboard/tabelwisata')->with('failed', 'data gagal di edit');
+    }
+  }
+
+  public function delete($id, $publicIdImg, $publicIdVid)
+  {
+    $delete = new getLocationDash();
+
+
+    try {
+      $boolDel = $delete->hapus($id);
+
+      if ($boolDel == true) {
+        // hapus di Cloaudinary 
+        if (strlen($publicIdImg) !== 0) {
+          // hapus file gambar  di Cloudinary
+          $publicIdImg = 'foto_geoloccation/' . $publicIdImg;
+          $hapusfileImage_Old = $this->Cloudinary->deleteAssetsSingleImage($publicIdImg);
+          return redirect()->to('Dashboard/tabelwisata')->with('success', 'data berhasil di hapus');
+        }
+        if (strlen($publicIdVid) !== 0) {
+          // hapus file Video di Cloudinary
+          $publicIdVid = "Video_geolocation/" . $publicIdVid;
+          $hapusfileVideo = $this->Cloudinary->deleteAssetsSingleVideo($publicIdVid);
+          return redirect()->to('Dashboard/tabelwisata')->with('success', 'data berhasil di hapus');
+        }
+        if ((strlen($publicIdImg) !== 0) && (strlen($publicIdVid) !== 0)) {
+          // hapus file gambar  di Cloudinary
+          $publicIdImg = 'foto_geoloccation/' . $publicIdImg;
+          $hapusfileImage_Old = $this->Cloudinary->deleteAssetsSingleImage($publicIdImg);
+          // hapus file Video di Cloudinary
+          $publicIdVid = "Video_geolocation/" . $publicIdVid;
+          $hapusfileVideo = $this->Cloudinary->deleteAssetsSingleVideo($publicIdVid);
+          return redirect()->to('Dashboard/tabelwisata')->with('success', 'data berhasil di hapus');
+        }
+      }
+
+      if ($boolDel != true) {
+        $message = throw new Exception('terjadi kesalahan Data');
+
+        return redirect()->to('Dashboard/tabelwisata')->with('failed', $message);
+      }
+    } catch (\Throwable $th) {
+      // throw $th->getMessage();
+      return redirect()->to('Dashboard/tabelwisata')->with('failed', $th->getMessage());
     }
   }
 }
