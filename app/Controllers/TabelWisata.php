@@ -112,9 +112,11 @@ class TabelWisata extends BaseController
         // hapus file dengan public_id yang lama
         $getPublic_Id_Video = $this->request->getPost("publicIdVideo");
 
-        $hapusfileVideo = $this->Cloudinary->deleteAssetsSingleVideo($getPublic_Id_Video);
+        $hapusfileVideo_Old = $this->Cloudinary->deleteAssetsSingleVideo($getPublic_Id_Video);
 
-        if (json_decode($hapusfileVideo["result"], true) == "ok") {
+        $responseDeleteVideo = json_decode($hapusfileVideo_Old, true);
+
+        if ($responseDeleteVideo["result"] == "ok") {
           // upload File Video
           $uploadVideo = $this->Cloudinary->Upload($getVideoFile->getTempName(), [
             'public_id' => 'Video_geolocation/' . pathinfo($getVideoFile->getName(), PATHINFO_FILENAME), // Nama file di Cloudinary
@@ -132,7 +134,7 @@ class TabelWisata extends BaseController
 
 
       if (json_encode($uploadGambar) !== null || json_encode($uploadVideo) !== null) {
-        return redirect()->to('/Dashboard/tabelwisata')->with('success', 'data berhasil di edit dan upload gambar');
+        return redirect()->to('/Dashboard/tabelwisata')->with('success', 'data berhasil di edit dan upload gambar atau upload video');
       } else {
         return redirect()->to('/Dashboard/tabelwisata')->with('success', 'data berhasil di edit');
       }
