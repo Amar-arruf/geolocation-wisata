@@ -4,17 +4,24 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\UserLogin;
+use App\Models\UserToken;
 
 class TambahSpot extends BaseController
 
 {
   protected $conn;
   protected $UserId;
+  protected $Token;
   public function index()
   {
     //
+    $this->Token = new UserToken();
+    $getToken = $this->Token->getToken($_COOKIE["access_token"]);
 
-    $this->UserId = '108321858974021678564';
+    if (isset($_COOKIE["access_token"])) {
+      $this->UserId = $getToken[0]["ID_AKUN"];
+    }
+
 
     $db = new UserLogin();
     $dataLogin = $db->getUserLogin($this->UserId);

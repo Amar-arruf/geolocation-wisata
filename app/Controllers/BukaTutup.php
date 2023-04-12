@@ -5,19 +5,24 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\BukaTutup as ModelsBukaTutup;
 use App\Models\UserLogin;
+use App\Models\UserToken;
 
 class BukaTutup extends BaseController
 {
+  protected $UserId;
+  protected $Token;
   public function index()
   {
     //
+    $this->Token = new UserToken();
+    $getToken = $this->Token->getToken($_COOKIE["access_token"]);
 
-
-
-    $UserId = '108321858974021678564';
+    if (isset($_COOKIE["access_token"])) {
+      $this->UserId = $getToken[0]["ID_AKUN"];
+    }
 
     $db = new UserLogin();
-    $dataLogin = $db->getUserLogin($UserId);
+    $dataLogin = $db->getUserLogin($this->UserId);
 
     $opencloseWisata = new ModelsBukaTutup();
     $opencloseWisata->GetDatasJamOperasi();
@@ -39,12 +44,18 @@ class BukaTutup extends BaseController
   {
     $dataSearch = new ModelsBukaTutup();
 
+    $this->Token = new UserToken();
+    $getToken = $this->Token->getToken($_COOKIE["access_token"]);
+
+    if (isset($_COOKIE["access_token"])) {
+      $this->UserId = $getToken[0]["ID_AKUN"];
+    }
+
     $keyword = $this->request->getGet('keyword');
     $dataSearch->search($keyword);
 
-    $UserId = '108321858974021678564';
     $db = new UserLogin();
-    $dataLogin = $db->getUserLogin($UserId);
+    $dataLogin = $db->getUserLogin($this->UserId);
 
     if (is_array($dataLogin)) {
       $userData = [

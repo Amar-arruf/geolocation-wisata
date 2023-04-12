@@ -5,17 +5,25 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\Gps as ModelsGps;
 use App\Models\UserLogin;
+use App\Models\UserToken;
 
 class GPS extends BaseController
 {
+  protected $UserId;
+  protected $Token;
   public function index()
   {
     //
+    $this->Token = new UserToken();
+    $getToken = $this->Token->getToken($_COOKIE["access_token"]);
 
-    $UserId = '108321858974021678564';
+    if (isset($_COOKIE["access_token"])) {
+      $this->UserId = $getToken[0]["ID_AKUN"];
+    }
+
 
     $db = new UserLogin();
-    $dataLogin = $db->getUserLogin($UserId);
+    $dataLogin = $db->getUserLogin($this->UserId);
 
     $gpsWisata = new ModelsGps();
     $gpsWisata->GetDatas();
@@ -44,6 +52,13 @@ class GPS extends BaseController
 
   public function search()
   {
+    $this->Token = new UserToken();
+    $getToken = $this->Token->getToken($_COOKIE["access_token"]);
+
+    if (isset($_COOKIE["access_token"])) {
+      $this->UserId = $getToken[0]["ID_AKUN"];
+    }
+
     $data = array();
     $dataSearch = new ModelsGps();
     $dataUser = new UserLogin();
@@ -60,7 +75,7 @@ class GPS extends BaseController
     $query2 = $builder2->select('KODE_POS')->get()->getResultArray();
 
     $UserId = '108321858974021678564';
-    $dataUserLogin = $dataUser->getUserLogin($UserId);
+    $dataUserLogin = $dataUser->getUserLogin($this->UserId);
 
     $data = [
       'id_user' => $dataUserLogin[0]["ID_USER"],

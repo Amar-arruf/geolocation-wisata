@@ -19,7 +19,7 @@
                         <div class="col mr-2">
                             <div class="text-sm font-weight-bold text-primary text-uppercase mb-1">
                                 Total wisata</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= sizeof($data_wisata); ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= count($data_wisata); ?></div>
                         </div>
                         <div class="col-auto">
                             <i class="fa-solid fa-map-location-dot fa-2x text-gray-400"></i>

@@ -5,16 +5,24 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\HariOperasi;
 use App\Models\UserLogin;
+use App\Models\UserToken;
 
 class HariOperasional extends BaseController
 {
+  protected $UserId;
+  protected $Token;
   public function index()
   {
     //
-    $UserId = '108321858974021678564';
+    $this->Token = new UserToken();
+    $getToken = $this->Token->getToken($_COOKIE["access_token"]);
+
+    if (isset($_COOKIE["access_token"])) {
+      $this->UserId = $getToken[0]["ID_AKUN"];
+    }
 
     $db = new UserLogin();
-    $dataLogin = $db->getUserLogin($UserId);
+    $dataLogin = $db->getUserLogin($this->UserId);
     $getHariOperasi = new HariOperasi();
     $getHariOperasi->GetDatasJamOperasi();
 
@@ -39,6 +47,13 @@ class HariOperasional extends BaseController
 
   public function search()
   {
+    $this->Token = new UserToken();
+    $getToken = $this->Token->getToken($_COOKIE["access_token"]);
+
+    if (isset($_COOKIE["access_token"])) {
+      $this->UserId = $getToken[0]["ID_AKUN"];
+    }
+
     $dataSearch = new HariOperasi();
 
     $keyword = $this->request->getGet('keyword');
@@ -46,9 +61,9 @@ class HariOperasional extends BaseController
 
     $conn = db_connect();
 
-    $UserId = '108321858974021678564';
+
     $db = new UserLogin();
-    $dataLogin = $db->getUserLogin($UserId);
+    $dataLogin = $db->getUserLogin($this->UserId);
 
     if (is_array($dataLogin)) {
       $userData = [

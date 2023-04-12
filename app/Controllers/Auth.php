@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace App\Controllers;
 
 use App\Libraries\Oauth2google;
@@ -9,23 +10,27 @@ use App\Models\UserToken;
 $db = db_connect();
 
 
-class Auth extends BaseController {
+class Auth extends BaseController
+{
 
   public $Bool;
   public $BoolToken;
 
-  public function login() { 
-    
+  public function login()
+  {
+
     return view('webComponent/formLogin');
   }
 
   // authentification genereted code authorization dengan google
-  public function loginGoogle () {
+  public function loginGoogle()
+  {
     $googleOauth = new Oauth2google();
     return redirect()->to($googleOauth->getAuthUrl());
   }
   // menukarkan code authorization ke akses token
-  public function  googleCallback() {
+  public function  googleCallback()
+  {
     $googleOauth = new Oauth2google();
     $data = $googleOauth->authenticate($this->request->getVar('code'));
     /*
@@ -36,54 +41,64 @@ class Auth extends BaseController {
 
     $getuserLogin = $userLogin->getUserLogin(json_decode(json_encode($data["userProfile"]["id"])));
 
-   // check gtuserLogin is_Array 
+    // check gtuserLogin is_Array 
 
-   if (is_array($getuserLogin)) {
-    $this->Bool = json_decode(json_encode($data["userProfile"]["id"])) === $getuserLogin[0]["ID_USER"];
-   }
-     // check jika ada username data tidak di tambahkan ke database
-    if($this->Bool) {
+    if (is_array($getuserLogin)) {
+      $this->Bool = json_decode(json_encode($data["userProfile"]["id"])) === $getuserLogin[0]["ID_USER"];
+    }
+    // check jika ada username data tidak di tambahkan ke database
+    if ($this->Bool) {
       echo "data sudah ada";
 
       var_dump($getuserLogin);
-
     } else {
       // echo "data perlu ditambahkan";
       // var_dump(json_decode(json_encode($data['userProfile']), true));
 
-       $message = $userLogin->addUser(json_decode(json_encode($data["userProfile"]), true));
-       echo $message ;  
+      $message = $userLogin->addUser(json_decode(json_encode($data["userProfile"]), true));
+      echo $message;
     }
 
     $getTokenGoogel = $userToken->getTokenUser(json_decode(json_encode($data["userProfile"]['id'])));
+    $getToken = $userToken->getToken(json_decode(json_encode($data["accessToken"]["access_token"])));
 
     // check jika ada token di database dan token accses tidak sama  maka update
-    if (isset($getTokenGoogel) && $data["accessToken"]["access_token"] !== $getTokenGoogel[0]["ACCESS_TOKEN"]) {
-      
-      $updateToken = $userToken->updateTokenDB(json_decode(json_encode($data["userProfile"]['id'])),$data["accessToken"]["access_token"]);
+    if (is_array($getTokenGoogel) && $data["accessToken"]["access_token"] !== $getTokenGoogel[0]["ACCESS_TOKEN"]) {
 
-      if($updateToken === "token berhasil di update") {
+      $updateToken = $userToken->updateTokenDB(json_decode(json_encode($data["userProfile"]["id"])), $data["accessToken"]["access_token"], 'Google');
+
+      if ($updateToken === "token berhasil di update") {
         var_dump($getTokenGoogel);
+        var_dump($data["accessToken"]["access_token"]);
         echo "data token sudah dan diupdate!";
       } else {
         echo "gagal diupdate token";
       }
-    }  else {
+    } else {
       //  simpan ke database
-      $message = $userToken->addToken($data["accessToken"], json_decode(json_encode($data["userProfile"]["id"])),"Google");
+      $message = $userToken->addToken($data["accessToken"], json_decode(json_encode($data["userProfile"]["id"])), "Google");
       echo $message;
+    }
+
+    // check token sudah di update  dan ada di database
+    if (is_array($getTokenGoogel) && is_array($getuserLogin)) {
+      setcookie('access_token', $data["accessToken"]["access_token"], time() + 3600, "/", '');
+      return redirect('Dashboard/dashboard');
+    } else {
+      setcookie('access_token', $data["accessToken"]["access_token"], time() + 3600, "/", '');
+      return redirect('Dashboard/dashboard');
     }
   }
 
   // authentification ke Instagram dan mendapatkan code authorization dengan Instagram
-  public function loginInstagram () 
+  public function loginInstagram()
   {
     $IGOauth = new Oauth2Instagram();
     // jalankan metode Authorization pada class IGOauth untuk mendapatkan Code authorization
     $IGOauth->Authorization();
   }
 
-  public function instagramCallback() 
+  public function instagramCallback()
   {
     $IGOauth = new Oauth2Instagram();
     // jalankan metode authorization untuk menukarkan kode ke dalam acces tokken 
@@ -91,7 +106,7 @@ class Auth extends BaseController {
 
     var_dump($data["token"]);
 
-    
+
     $userLoginIG = new UserLogin();
     $userTokenIG = new UserToken();
 
@@ -100,21 +115,21 @@ class Auth extends BaseController {
     $getUserID = $userLoginIG->getUserLogin($data["user"]->toArray()["id"]);
     $getUserToken =  $userTokenIG->getTokenUser($data["user"]->toArray()["id"]);
 
-  
+
     // check kembalian dari variabel $getUserID
     if (is_array($getUserID)) {
       echo "data sudah ada";
-       var_dump($getUserID);
+      var_dump($getUserID);
     } else {
-      $addUser = $userLoginIG->addUser($data["user"]->toArray(),"Instagram");
+      $addUser = $userLoginIG->addUser($data["user"]->toArray(), "Instagram");
       echo $addUser;
     }
 
     // check jika ada token di database dan token accses tidak sama  maka update
 
-    if(is_array($getUserToken) && $data["token"]->getToken() !== $getUserToken[0]["ACCESS_TOKEN"]) {
-      
-      $updateTokenIg = $userTokenIG->updateTokenDB($data["user"]->toArray()["id"],$data["token"]->getToken());
+    if (is_array($getUserToken) && $data["token"]->getToken() !== $getUserToken[0]["ACCESS_TOKEN"]) {
+
+      $updateTokenIg = $userTokenIG->updateTokenDB($data["user"]->toArray()["id"], $data["token"]->getToken(), 'Instagram');
 
       if ($updateTokenIg === "token berhasil di update") {
         echo "data token Instagram Sudah diupdate!";
@@ -122,11 +137,25 @@ class Auth extends BaseController {
       } else {
         var_dump("token gagal di update");
       }
-
     } else {
-          $addToken = $userTokenIG->addToken($data["token"],$data["user"]->toArray()["id"],"Instagram");
-          echo $addToken;
+      $addToken = $userTokenIG->addToken($data["token"], $data["user"]->toArray()["id"], "Instagram");
+      echo $addToken;
     }
 
+    // check token sudah di update  dan ada di database
+    if (is_array($getUserToken) && is_array($getUserID)) {
+      setcookie('access_token', $data["token"]->getToken(), time() + 3600, "/", '');
+      return redirect('Dashboard/dashboard');
+    } else {
+      setcookie('access_token', $data["token"]->getToken(), time() + 3600, "/", '');
+      return redirect('Dashboard/dashboard');
+    }
+  }
+
+  public function logout()
+  {
+    helper('cookie');
+    delete_cookie("access_token");
+    return redirect()->to('/login');
   }
 }

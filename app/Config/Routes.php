@@ -31,6 +31,7 @@ $routes->set404Override();
  */
 
 $routes->get('/login', 'Auth::login');
+$routes->get('/logout', 'Auth::logout');
 $routes->get('/login/auth/google', 'Auth::loginGoogle');
 $routes->get('/login/auth/google/callback', 'Auth::googleCallback');
 $routes->get('/login/auth/ig', 'Auth::loginInstagram');

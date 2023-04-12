@@ -8,6 +8,9 @@ class UserToken extends Model
 {
     protected $DBGroup          = 'default';
     protected $table            = 'token';
+    protected $primaryKey       = 'ID_TOKEN';
+    protected $protectFields    = true;
+    protected $allowedFields    = ["ID_TOKEN", "ACCESS_TOKEN", "EXPIRES_IN", "LOGIN_TYPE", "ID_AKUN"];
 
     protected $db;
 
@@ -15,12 +18,11 @@ class UserToken extends Model
 
     public function __construct()
     {
-        parent::__construct ();
+        parent::__construct();
         $this->db = db_connect();
-
     }
 
-    public function getTokenUser($id) 
+    public function getTokenUser($id)
     {
         $builder = $this->db->table($this->table)->where('ID_AKUN', $id, true)->get();
         $data = $builder->getResultArray();
@@ -32,38 +34,48 @@ class UserToken extends Model
         }
     }
 
-    public function updateTokenDB ($idUser = '', $tokennew = "",$typeLogin = '' ) 
+    public function updateTokenDB($idUser, $tokennew, $typeLogin)
     {
+        // $messagetoken = null;
         // update Token
         if ($typeLogin === 'Google') {
             $this->builder = $this->db->table($this->table);
-            $this->builder->set('ACCESS_TOKEN',$tokennew);
-            $this->builder->where('ID_TOKEN', 'G-'. $idUser);
+            $this->builder->set('ACCESS_TOKEN', $tokennew);
+            $this->builder->where('ID_TOKEN', 'G-' . $idUser);
             $this->builder->update();
+
+            // $data = [
+            //     'ACCESS_TOKEN' => $tokennew,
+            // ];
+
+            // $messagetoken = $this->update('G-' . $idUser, $data);
         } else {
             $this->builder = $this->db->table($this->table);
-            $this->builder->set('ACCESS_TOKEN',$tokennew);
-            $this->builder->where('ID_TOKEN', 'IG-'. $idUser);
+            $this->builder->set('ACCESS_TOKEN', $tokennew);
+            $this->builder->where('ID_TOKEN', 'IG-' . $idUser);
             $this->builder->update();
+
+            // $data = [
+            //     'ACCESS_TOKEN' => $tokennew,
+            // ];
+
+            // $messagetoken = $this->update('IG-' . $idUser, $data);
         }
 
-      
-
-        if ($this->builder)
-        {
+        if ($this->builder) {
             return "token berhasil di update";
         } else {
             return "token gagal dipupdate";
         }
     }
 
-    public function addToken ($arr, $id_Akun, $typeLogin = '') 
+    public function addToken($arr, $id_Akun, $typeLogin = '')
     {
         $data = [];
 
         if ($typeLogin === "Google") {
             $data = [
-                'ID_TOKEN' => 'G-'. $id_Akun,
+                'ID_TOKEN' => 'G-' . $id_Akun,
                 'ACCESS_TOKEN' => $arr['access_token'],
                 'EXPIRES_IN' => $arr['expires_in'],
                 'LOGIN_TYPE' =>  $typeLogin,
@@ -71,7 +83,7 @@ class UserToken extends Model
             ];
         } else {
             $data = [
-                'ID_TOKEN' => 'IG-'. $id_Akun,
+                'ID_TOKEN' => 'IG-' . $id_Akun,
                 'ACCESS_TOKEN' => $arr->getToken(),
                 'EXPIRES_IN' => $arr->getExpires(),
                 'LOGIN_TYPE' =>  $typeLogin,
@@ -85,6 +97,18 @@ class UserToken extends Model
             return "token berhasil ditambahkan di database";
         } else {
             return "token gagal ditambahkan ke database";
+        }
+    }
+
+    public function getToken($token)
+    {
+        $builder = $this->db->table($this->table)->where('ACCESS_TOKEN', $token)->get();
+        $data = $builder->getResultArray();
+
+        if (count($data) >= 1) {
+            return $data;
+        } else {
+            return "data token dengan id token yang anda minta tidak ada";
         }
     }
 }

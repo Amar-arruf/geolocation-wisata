@@ -5,18 +5,28 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\getLocationDash;
 use App\Models\UserLogin;
+use App\Models\UserToken;
 use Exception;
 
 class TabelWisata extends BaseController
 {
+  protected $UserId;
+  protected $Token;
+
   public function index()
   {
     //
     $userData = array();
 
-    $UserId = '108321858974021678564';
+    $this->Token = new UserToken();
+    $getToken = $this->Token->getToken($_COOKIE["access_token"]);
+
+    if (isset($_COOKIE["access_token"])) {
+      $this->UserId = $getToken[0]["ID_AKUN"];
+    }
+
     $db = new UserLogin();
-    $dataLogin = $db->getUserLogin($UserId);
+    $dataLogin = $db->getUserLogin($this->UserId);
 
     $dataWisata = new getLocationDash();
     $dapatData = $dataWisata->getAllDataWithoutJoin();
@@ -42,12 +52,19 @@ class TabelWisata extends BaseController
     $dataSearch = new getLocationDash();
     $dataUser = new UserLogin();
 
+    $this->Token = new UserToken();
+    $getToken = $this->Token->getToken($_COOKIE["access_token"]);
+
+    if (isset($_COOKIE["access_token"])) {
+      $this->UserId = $getToken[0]["ID_AKUN"];
+    }
+
     $keyword = $this->request->getGet('keyword');
     $dataSearch->search($keyword);
 
 
-    $UserId = '108321858974021678564';
-    $dataUserLogin = $dataUser->getUserLogin($UserId);
+
+    $dataUserLogin = $dataUser->getUserLogin($this->UserId);
 
     $data = [
       'id_user' => $dataUserLogin[0]["ID_USER"],

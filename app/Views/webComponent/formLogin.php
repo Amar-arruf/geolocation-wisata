@@ -25,9 +25,11 @@
       height: 1px;
       background: #eee;
     }
+
     .h-custom {
       height: calc(100% - 73px);
     }
+
     @media (max-width: 450px) {
       .h-custom {
         height: 100%;
@@ -38,8 +40,7 @@
     <div class="container-fluid h-custom">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-md-9 col-lg-6 col-xl-5">
-          <img src="<?= base_url('tourist_map.svg') ?>" class="img-fluid"
-            alt="Sample image">
+          <img src="<?= base_url('tourist_map.svg') ?>" class="img-fluid" alt="Sample image">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
           <form>
@@ -49,7 +50,7 @@
                 <i class="fab fa-google"></i>
               </a>
 
-              <a type="button" class="btn btn-primary btn-floating mx-1">
+              <a type="button" href="<?= base_url('/login/auth/ig') ?>" class="btn btn-primary btn-floating mx-1">
                 <i class="fab fa-instagram"></i>
               </a>
 
@@ -64,15 +65,13 @@
 
             <!-- Email input -->
             <div class="form-outline mb-4">
-              <input type="email" id="form3Example3" class="form-control form-control-lg"
-                placeholder="Enter a valid email address" />
+              <input type="email" id="form3Example3" class="form-control form-control-lg" placeholder="Enter a valid email address" />
               <label class="form-label" for="form3Example3">Alamat Email</label>
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-3">
-              <input type="password" id="form3Example4" class="form-control form-control-lg"
-                placeholder="Enter password" />
+              <input type="password" id="form3Example4" class="form-control form-control-lg" placeholder="Enter password" />
               <label class="form-label" for="form3Example4">Password</label>
             </div>
 
@@ -88,10 +87,8 @@
             </div>
 
             <div class="text-center text-lg-start mt-4 pt-2">
-              <button type="button" class="btn btn-primary btn-lg"
-                style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-              <p class="small fw-bold mt-2 pt-1 mb-0">tidak punya akun <a href="#!"
-                  class="link-danger">Daftar!</a></p>
+              <button type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+              <p class="small fw-bold mt-2 pt-1 mb-0">tidak punya akun <a href="#!" class="link-danger">Daftar!</a></p>
             </div>
 
           </form>
@@ -123,7 +120,7 @@
   <!-- End your project here-->
 
   <!-- MDB -->
-  <script type="text/javascript" src="<?= base_url('MD/js/mdb.min.js') ?>" ></script>
+  <script type="text/javascript" src="<?= base_url('MD/js/mdb.min.js') ?>"></script>
   <!-- Custom scripts -->
   <script type="text/javascript"></script>
 </body>
