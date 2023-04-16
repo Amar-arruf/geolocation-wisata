@@ -241,36 +241,46 @@
         // Panggil fungsi untuk membaca data EXIF dari objek gambar
         EXIF.getData(image, function() {
           // ambil informasi GPS dari data EXIF
-          let latitude = EXIF.getTag(this, "GPSLatitude");
-          let longitude = EXIF.getTag(this, "GPSLongitude");
+          // check ambil data semuanya
 
-          // Konversi koordinat GPS dari format derajat, menit, dan detik ke format derajat desimal
-          let latitudeRef = EXIF.getTag(this, "GPSLatitudeRef") || "N";
-          let longitudeRef = EXIF.getTag(this, "GPSLongitudeRef") || "W";
-          let latitudeDeg = latitude[0].numerator / latitude[0].denominator;
-          let latitudeMin = latitude[1].numerator / latitude[1].denominator;
-          let latitudeSec = latitude[2].numerator / latitude[2].denominator;
-          let longitudeDeg = longitude[0].numerator / longitude[0].denominator;
-          let longitudeMin = longitude[1].numerator / longitude[1].denominator;
-          let longitudeSec = longitude[2].numerator / longitude[2].denominator;
-          let latitudeFinal = convertDMSToDD(latitudeDeg, latitudeMin, latitudeSec, latitudeRef);
-          let longitudeFinal = convertDMSToDD(longitudeDeg, longitudeMin, longitudeSec, longitudeRef);
+          let getDataObj = EXIF.getAllTags(this);
 
-          // Tampilkan koordinat GPS dalam format derajat desimal di konsol
-          console.log("Latitude: " + latitudeFinal);
-          console.log("Longitude: " + longitudeFinal);
+          if (getDataObj.hasOwnProperty("GPSLatitude") && getDataObj.hasOwnProperty("GPSLongitude")) {
 
-          exifData = {
-            "longitude": longitudeFinal,
-            "latitude": latitudeFinal
-          };
+            let latitude = EXIF.getTag(this, "GPSLatitude");
+            let longitude = EXIF.getTag(this, "GPSLongitude");
 
-          // tampilkan ke form 
-          inputLatitude.value = latitudeFinal
-          inputLongitude.value = longitudeFinal
+            // Konversi koordinat GPS dari format derajat, menit, dan detik ke format derajat desimal
+            let latitudeRef = EXIF.getTag(this, "GPSLatitudeRef") || "N";
+            let longitudeRef = EXIF.getTag(this, "GPSLongitudeRef") || "W";
+            let latitudeDeg = latitude[0].numerator / latitude[0].denominator;
+            let latitudeMin = latitude[1].numerator / latitude[1].denominator;
+            let latitudeSec = latitude[2].numerator / latitude[2].denominator;
+            let longitudeDeg = longitude[0].numerator / longitude[0].denominator;
+            let longitudeMin = longitude[1].numerator / longitude[1].denominator;
+            let longitudeSec = longitude[2].numerator / longitude[2].denominator;
+            let latitudeFinal = convertDMSToDD(latitudeDeg, latitudeMin, latitudeSec, latitudeRef);
+            let longitudeFinal = convertDMSToDD(longitudeDeg, longitudeMin, longitudeSec, longitudeRef);
 
-          // tampilkan ke message 
-          message.innerText = `Latitude: ${latitudeFinal}, Longitude: ${longitudeFinal}`;
+            // Tampilkan koordinat GPS dalam format derajat desimal di konsol
+            console.log("Latitude: " + latitudeFinal);
+            console.log("Longitude: " + longitudeFinal);
+
+            exifData = {
+              "longitude": longitudeFinal,
+              "latitude": latitudeFinal
+            };
+
+            // tampilkan ke form 
+            inputLatitude.value = latitudeFinal
+            inputLongitude.value = longitudeFinal
+
+            // tampilkan ke message 
+            message.innerText = `Latitude: ${latitudeFinal}, Longitude: ${longitudeFinal}`;
+          } else {
+            // tampilkan ke message 
+            message.innerText = `mohon maaf data GPS tidak ada silahkan input manual dengan format derajat desimal`;
+          }
         });
       });
       image.src = URL.createObjectURL(file);
