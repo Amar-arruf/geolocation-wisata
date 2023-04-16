@@ -77,7 +77,9 @@
           "VIDEO": js_data[i]["VIDEO"],
           "GAMBAR": js_data[i]["GAMBAR"],
           "JAM OPERASIONAL": js_data[i]["JAM_OPERASIONAL"],
-          "HARI OPERASIONAL": js_data[i]["HARI_OPERASIONAL"]
+          "HARI OPERASIONAL": js_data[i]["HARI_OPERASIONAL"],
+          "USERNAME": js_data[i]["USERNAME"],
+          "GAMBAR_PROFIL": js_data[i]["GAMBAR_PROFIL"]
         }
       })
     }
@@ -144,6 +146,7 @@
     function flyToStore(currentFeature) {
       map.flyTo({
         center: currentFeature.geometry.coordinates,
+        essential: true,
         zoom: 15
       });
     }
@@ -156,9 +159,19 @@
           closeOnClick: false
         })
         .setLngLat(currentFeature.geometry.coordinates)
-        .setHTML(
-          `<h5>nama wisata</h5><h6>${currentFeature.properties["NAMA"]}</h6>`
-        )
+        .setHTML(`
+            <h5>nama wisata</h5>
+            <h6>${currentFeature.properties["NAMA"]}</h6>
+            <div class="mt-1" >
+              <P class="text-xs text-center mb-1">Di Upload</P>
+              <div class ="row text-center p-1">
+                <h6>${currentFeature.properties["USERNAME"]}</h6>
+                <div class="profile-img overflow-hidden" style="width: 50px; height: 50px; margin: auto;">
+                  <img src="${currentFeature.properties["GAMBAR_PROFIL"]}" alt="${currentFeature.properties["USERNAME"]}" class="rounded-circle" style="width: 100%; height: 100%">
+                </div>
+              </div>
+            </div>
+          `)
         .addTo(map);
 
 

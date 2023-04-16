@@ -10,15 +10,15 @@ class Home extends BaseController
     {
         // intancesiasi models tabels
         $getAllLocation = new getLocationDash();
-        
+
         // passing data to View
 
         $data = [
-            'getData' => $getAllLocation->getAllDataWisata(),
+            'getData' => $getAllLocation->getAllDataWithDatauserUpload(),
             'getdataCloud' => json_decode($this->Cloudinary->getResource()),
             "getdataVideo" => json_decode($this->Cloudinary->getResourceVideo())
         ];
-    
-        return view('layout',$data);
+
+        return view('layout', $data);
     }
 }

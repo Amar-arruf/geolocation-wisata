@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use CodeIgniter\Model;
 
 class getLocationDash extends Model
@@ -53,6 +54,31 @@ class getLocationDash extends Model
       $builder = $this->findAll();
 
       return $builder;
+   }
+
+   public function getAllDataWithDatauserUpload()
+   {
+      $builder = $this->builder($this->table);
+      $builder->select(
+         $this->table . '.ID,'
+            . $this->table . '.NAMA,'
+            . $this->table . '.VIDEO,'
+            . $this->table . '.DESKRIPSI_TEXT,'
+            . $this->table . '.GAMBAR,
+         buka_tutup_wisata.JAM_OPERASIONAL, 
+         hari_operasional_wisata.HARI_OPERASIONAL, 
+         gps.LONGITUDE, 
+         gps.ALTITUDE,
+         userlogin.USERNAME,
+         userlogin.GAMBAR_PROFIL,'
+      );
+      $builder->join('hari_operasional_wisata', 'hari_operasional_wisata.ID = profil_wisata.ID');
+      $builder->join('buka_tutup_wisata', 'buka_tutup_wisata.KODE_JAM_OPERASI = hari_operasional_wisata.KODE_JAM_OPERASI');
+      $builder->join('gps', 'gps.ID = profil_wisata.ID');
+      $builder->join('uploader', 'uploader.ID = profil_wisata.ID');
+      $builder->join('userlogin', 'userlogin.ID_USER = uploader.USER_ID');
+
+      return $query = $builder->get()->getResultArray();
    }
 
    public function search($keyword)
