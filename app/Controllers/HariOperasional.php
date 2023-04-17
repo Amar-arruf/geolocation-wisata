@@ -24,7 +24,7 @@ class HariOperasional extends BaseController
     $db = new UserLogin();
     $dataLogin = $db->getUserLogin($this->UserId);
     $getHariOperasi = new HariOperasi();
-    $getHariOperasi->GetDatasJamOperasi();
+    $getDataOperasional = $getHariOperasi->GetDatasJamOperasi($this->UserId);
 
     $conn = db_connect();
 
@@ -37,8 +37,8 @@ class HariOperasional extends BaseController
         'kode_uploader' => $conn->table('uploader')->select('KODE_UPLOADER')->get()->getResultArray(),
         'id_wisata' => $conn->table('profil_wisata')->select('ID')->get()->getResultArray(),
         'kode_jam' => $conn->table('buka_tutup_wisata')->select('KODE_JAM_OPERASI')->get()->getResultArray(),
-        'PagerHariOperasional' => $getHariOperasi->paginate(3),
-        'pager' => $getHariOperasi->pager
+        'PagerHariOperasional' => $getDataOperasional->paginate(3),
+        'pager' => $getDataOperasional->pager
       ];
     }
 

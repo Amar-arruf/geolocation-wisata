@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\getLocationDash;
+use App\Models\DataDashboardUser;
 use App\Models\UserLogin;
 use App\Models\UserToken;
 
@@ -28,8 +28,8 @@ class Dashboard extends BaseController
     $db = new UserLogin();
     $dataLogin = $db->getUserLogin($this->UserId);
 
-    $dataWisata = new getLocationDash();
-    $getDataWisata = $dataWisata->getAllDataWisata();
+    $dataWisata = new DataDashboardUser();
+    $getDataWisata = $dataWisata->getAllDataUser($this->UserId);
 
 
     if (is_array($dataLogin) && is_array($getDataWisata)) {

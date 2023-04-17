@@ -14,6 +14,7 @@ class GPS extends BaseController
   public function index()
   {
     //
+    $userData = array();
     $this->Token = new UserToken();
     $getToken = $this->Token->getToken($_COOKIE["access_token"]);
 
@@ -26,7 +27,7 @@ class GPS extends BaseController
     $dataLogin = $db->getUserLogin($this->UserId);
 
     $gpsWisata = new ModelsGps();
-    $gpsWisata->GetDatas();
+    $datagpsWisata = $gpsWisata->GetDatas($this->UserId);
 
     $conn = db_connect();
 
@@ -36,15 +37,15 @@ class GPS extends BaseController
     $builder2 = $conn->table('kecamatan');
     $query2 = $builder2->select('KODE_POS')->get()->getResultArray();
 
-    if (is_array($dataLogin) && is_array($gpsWisata->GetDatas())) {
+    if (is_array($dataLogin)) {
       $userData = [
         'id_user' => $dataLogin[0]["ID_USER"],
         'username' => $dataLogin[0]["USERNAME"],
         'poto_profil' => $dataLogin[0]["GAMBAR_PROFIL"],
         'id_Wisata' => $query,
         'kode_pos' => $query2,
-        "pagergpswisata" => $gpsWisata->paginate(3),
-        'pager' => $gpsWisata->pager
+        "data_gps_pager" => $datagpsWisata->paginate(3),
+        'pager' => $datagpsWisata->pager
       ];
     }
     return view('Dashboard/Page/tabelgps', $userData);
@@ -74,7 +75,7 @@ class GPS extends BaseController
     $builder2 = $conn->table('kecamatan');
     $query2 = $builder2->select('KODE_POS')->get()->getResultArray();
 
-    $UserId = '108321858974021678564';
+
     $dataUserLogin = $dataUser->getUserLogin($this->UserId);
 
     $data = [

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\DataDashboardUser;
 use App\Models\UserLogin;
 use App\Models\UserToken;
 
@@ -26,27 +27,15 @@ class TambahSpot extends BaseController
     $db = new UserLogin();
     $dataLogin = $db->getUserLogin($this->UserId);
 
-    $this->conn = db_connect();
-    $query = $this->conn->table('profil_wisata')
-      ->select("
-        profil_wisata.ID,
-        profil_wisata.NAMA,
-        profil_wisata.VIDEO,
-        profil_wisata.DESKRIPSI_TEXT,
-        profil_wisata.GAMBAR,
-        gps.LONGITUDE,
-        gps.ALTITUDE")
-      ->join('gps', "gps.ID = profil_wisata.ID")
-      ->get();
-
-    $result = $query->getResult('array');
+    $data = new DataDashboardUser();
+    $getData =  $data->getAllDataUser($this->UserId);
 
     if (is_array($dataLogin)) {
       $userData = [
         'id_user' => $dataLogin[0]["ID_USER"],
         'username' => $dataLogin[0]["USERNAME"],
         'poto_profil' => $dataLogin[0]["GAMBAR_PROFIL"],
-        'data_wisata' => $result
+        'data_wisata' => $getData
       ];
     }
 

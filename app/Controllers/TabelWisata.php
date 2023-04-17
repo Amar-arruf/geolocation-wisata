@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\DataWisata;
 use App\Models\getLocationDash;
 use App\Models\UserLogin;
 use App\Models\UserToken;
@@ -28,18 +29,18 @@ class TabelWisata extends BaseController
     $db = new UserLogin();
     $dataLogin = $db->getUserLogin($this->UserId);
 
-    $dataWisata = new getLocationDash();
-    $dapatData = $dataWisata->getAllDataWithoutJoin();
+    $dataWisata = new DataWisata();
+    $dapatData = $dataWisata->getAllDataUser($this->UserId);
 
 
-    if (is_array($dataLogin) && is_array($dapatData)) {
+    if (is_array($dataLogin)) {
       $userData = [
         'id_user' => $dataLogin[0]["ID_USER"],
         'username' => $dataLogin[0]["USERNAME"],
         'poto_profil' => $dataLogin[0]["GAMBAR_PROFIL"],
         // pagination 
-        'pagerWisata' => $dataWisata->paginate(3),
-        'pager' => $dataWisata->pager
+        'pagerWisata' => $dapatData->paginate(3),
+        'pager' => $dapatData->pager
       ];
     }
 

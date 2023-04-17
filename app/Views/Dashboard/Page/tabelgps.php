@@ -33,7 +33,7 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($pagergpswisata as $row) : ?>
+            <?php foreach ($data_gps_pager as $row) : ?>
               <tr>
                 <td class="text"><?= $row["KODE"]; ?></td>
                 <td class="text"><?= $row["ID"]; ?></td>
