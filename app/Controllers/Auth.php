@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Libraries\Oauth2google;
 use App\Libraries\Oauth2Instagram;
+use App\Models\Akun;
 use App\Models\UserLogin;
 use App\Models\UserToken;
 
@@ -15,13 +16,47 @@ class Auth extends BaseController
 
   public $Bool;
   public $BoolToken;
+  public $session;
 
   public function login()
   {
 
     return view('webComponent/formLogin');
   }
+  // auth admin 
+  public function auth()
+  {
+    $model = new Akun();
 
+    $username = $this->request->getPost("username");
+    $password = $this->request->getPost("password");
+
+    $data = $model->getakun($username);
+
+    // check data is valid
+    if (is_array($data) || is_object($data)) {
+      $this->session = \Config\Services::session();
+
+      // check data password = 
+      $passdataDB = $data["PASSWORD"];
+      if ($password === $passdataDB) {
+        $ses_data = [
+          'user_id' => $data["ID_AKUN"],
+          'username' => $data["USERNAME"]
+        ];
+
+        $this->session->set($ses_data);
+
+        // redirect ke Dashboard login
+
+        echo "Selamat datang didashboard Admin";
+      } else {
+        return redirect()->to('/login')->with("message", "Paswword Salah");
+      }
+    } else {
+      return redirect()->to("/login")->with("message", "gagal login silahkan check Username");
+    }
+  }
   // authentification genereted code authorization dengan google
   public function loginGoogle()
   {
