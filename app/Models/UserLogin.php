@@ -61,4 +61,22 @@ class UserLogin extends Model
             return "data gagal ditambahkan";
         }
     }
+
+    public function getAllDataUser()
+    {
+        return $this->findAll();
+    }
+
+    public function getDataUserAktif($status)
+    {
+        $data = '';
+
+        if ($status === 'aktif') {
+            $data = $status;
+        } else {
+            $data = 'nonaktif';
+        }
+
+        return $this->where("STATUS", $data)->findAll();
+    }
 }

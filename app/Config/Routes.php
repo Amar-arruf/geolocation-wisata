@@ -47,6 +47,7 @@ $routes->get('/Dashboard/tabelwisata', 'TabelWisata::index');
 $routes->get('/Dashboard/gps', 'GPS::index');
 $routes->get('/Dashboard/bukatutup', 'BukaTutup::index');
 $routes->get('/Dashboard/harioperasi', 'HariOperasional::index');
+$routes->get('Dashboard/admin/dashboard', 'Admin\DashboardAdmin::dashboard');
 
 $routes->post('/Dashboard/tambahsport/add', "TambahSpot::add");
 
@@ -65,6 +66,11 @@ $routes->post("/Dashboard/bukatutup/(:segment)/delete", "BukaTutup::delete/$1");
 $routes->get("Dashboard/harioperasi/search", "HariOperasional::search");
 $routes->post("/Dashboard/harioperasi/(:segment)/edit", "HariOperasional::edit/$1");
 $routes->get("/Dashboard/harioperasi/(:segment)/delete", "HariOperasional::delete/$1");
+
+$routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
+    $routes->get('dashboardadmin', 'DashboardAdmin::dashboard');
+    // tambahkan routes untuk controller di dalam folder Admin lainnya di sini
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing

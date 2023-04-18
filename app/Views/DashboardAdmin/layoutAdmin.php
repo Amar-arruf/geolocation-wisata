@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard | geolocation wisata</title>
+  <title>Dashboard Admin| geolocation wisata</title>
 
   <!-- custom css fonts ke  dashboard  -->
   <link rel="stylesheet" type="text/css" href="<?= base_url('vendorCustom/fontawesome-free/css/fontawesome.css'); ?>">
@@ -21,7 +21,6 @@
   <link rel="stylesheet" href="<?= base_url('style/sb-admin-2.min.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('style/sweetalert2.min.css'); ?>">
   <script src="<?= base_url('js/sweetalert2.min.js'); ?>"></script>
-  <script src="<?= base_url('js/exif.js') ?>"></script>
 
   <!-- Custom style own -->
   <link rel="stylesheet" href="<?= base_url('style/styleDashboard.css') ?>">
@@ -33,7 +32,7 @@
   <!-- page wrapper -->
   <div id="wrapper">
     <!-- include component navbar -->
-    <?= $this->include("Dashboard/sidebar"); ?>
+    <?= $this->include("DashboardAdmin/sidebarAdmin"); ?>
     <!-- akhir component navbar -->
 
     <!--Content Wrapper -->
@@ -41,7 +40,7 @@
       <!-- Main Content -->
       <div id="content">
         <!-- TopBar -->
-        <?= $this->include("Dashboard/topbar"); ?>
+        <?= $this->include("DashboardAdmin/topbarAdmin"); ?>
         <!-- Akhir Top Bar -->
         <!-- $Content Dinamis -->
         <?= $this->renderSection('content') ?>

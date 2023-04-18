@@ -47,9 +47,9 @@ class Auth extends BaseController
 
         $this->session->set($ses_data);
 
-        // redirect ke Dashboard login
+        // redirect ke Dashboard
 
-        echo "Selamat datang didashboard Admin";
+        return redirect()->to("admin/dashboardadmin");
       } else {
         return redirect()->to('/login')->with("message", "Paswword Salah");
       }

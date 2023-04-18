@@ -6,10 +6,10 @@
     <i class="fa fa-bars"></i>
   </button>
 
-  <!-- Topbar Search -->
+  <!-- Topbar BreadCrumb-->
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+      <li class="breadcrumb-item"><a href="">Dashboard Admin</a></li>
       <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
     </ol>
   </nav>
@@ -17,17 +17,17 @@
   <!-- Topbar Navbar -->
   <ul class="navbar-nav ml-auto">
 
-    <!-- Nav Item - Breadcrumb Dropdown (Visible Only XS) -->
+    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
     <li class="nav-item dropdown no-arrow d-sm-none">
       <a class="nav-link dropdown-toggle" href="#" id="breadcrumbDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-angle-right"></i>
+        <i class="fas fa-angles-right"></i>
       </a>
-      <!-- Dropdown - item breadcrumb -->
+      <!-- Dropdown - Messages -->
       <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="breadcrumbDropdown">
-        <nav class="mr-auto w-100" aria-label="breadcrumb">
+        <nav aria-label="breadcrumb" class="mr-auto w-100">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Library</li>
+            <li class="breadcrumb-item"><a href="">Dashboard Admin</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
           </ol>
         </nav>
       </div>
@@ -37,11 +37,7 @@
     <li class="nav-item dropdown no-arrow">
       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= esc($username) ?></span>
-        <?php if ($poto_profil !== null) : ?>
-          <img class="img-profile rounded-circle" src="<?= $poto_profil ?>">
-        <?php else : ?>
-          <div class="px-2"><i class="fas fa-user fa-fw text-gray-400"></i></div>
-        <?php endif; ?>
+        <div class="px-2"><i class="fas fa-user fa-fw text-gray-400"></i></div>
       </a>
       <!-- Dropdown - User Information -->
       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
