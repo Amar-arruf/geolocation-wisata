@@ -17,4 +17,19 @@ class Kecamatan extends Model
     {
         return $this->countAllResults();
     }
+
+    public function search($keyword)
+    {
+        return $this->like("KECAMATAN", $keyword);
+    }
+
+    public function edit($id)
+    {
+        return $this->update($id, ["KECAMATAN" => $_POST["kecamatan"]]);
+    }
+
+    public function hapus($id)
+    {
+        return $this->delete($id);
+    }
 }
