@@ -80,6 +80,11 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->get('kecamatan/search', "Kecamatan::search");
     $routes->post('kecamatan/(:segment)/edit', "Kecamatan::edit/$1");
     $routes->get('kecamatan/(:segment)/hapus', "Kecamatan::delete/$1");
+
+    $routes->get('desa/search', "Desa::search");
+    $routes->post('desa/add', "Desa::add");
+    $routes->post('desa/(:segment)/edit', "Desa::edit/$1");
+    $routes->get('desa/(:segment)/hapus', "Desa::delete/$1");
     // tambahkan routes untuk controller di dalam folder Admin lainnya di sini
 });
 /*
