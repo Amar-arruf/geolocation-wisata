@@ -18,6 +18,16 @@ class Kecamatan extends Model
         return $this->countAllResults();
     }
 
+    public function tambah()
+    {
+        $data = [
+            "KODE_POS" => $_POST["id"],
+            "KECAMATAN" => $_POST["kecamatan"]
+        ];
+
+        return $this->insert($data);
+    }
+
     public function search($keyword)
     {
         return $this->like("KECAMATAN", $keyword);

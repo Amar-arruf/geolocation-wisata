@@ -66,6 +66,25 @@ class Kecamatan extends BaseController
     return view("DashboardAdmin/Pages/dataKecamatan", $this->data);
   }
 
+  public function add()
+  {
+    // check session data
+    $this->session = \Config\Services::session();
+
+    if (!$this->session->has('username')) {
+      return redirect()->to('login');
+    }
+
+    $modelkecamatan = new ModelsKecamatan();
+    $addData = $modelkecamatan->tambah();
+
+    if ($addData == true) {
+      return redirect()->to("admin/kecamatan")->with("success", "data berhasil diubah");
+    } else {
+      return redirect()->to("admin/kecamatan")->with("failed", "data gagal diubah");
+    }
+  }
+
   public function edit($id)
   {
     // check session data

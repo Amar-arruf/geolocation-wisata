@@ -78,6 +78,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->get('userdata/(:segment)/hapus', "Userlogin::delete/$1");
 
     $routes->get('kecamatan/search', "Kecamatan::search");
+    $routes->post('kecamatan/add', "Kecamatan::add");
     $routes->post('kecamatan/(:segment)/edit', "Kecamatan::edit/$1");
     $routes->get('kecamatan/(:segment)/hapus', "Kecamatan::delete/$1");
 

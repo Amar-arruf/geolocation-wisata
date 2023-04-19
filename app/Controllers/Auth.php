@@ -117,8 +117,13 @@ class Auth extends BaseController
 
     // check token sudah di update  dan ada di database
     if (is_array($getTokenGoogel) && is_array($getuserLogin)) {
-      setcookie('access_token', $data["accessToken"]["access_token"], time() + 3600, "/", '');
-      return redirect('Dashboard/dashboard');
+      // check statusnya 
+      if ($getuserLogin[0]["STATUS"] == "aktif") {
+        setcookie('access_token', $data["accessToken"]["access_token"], time() + 3600, "/", '');
+        return redirect('Dashboard/dashboard');
+      } else {
+        return redirect()->to('/login')->with("failed", "gagal login anda dinonaktifkan oleh admin");
+      }
     } else {
       setcookie('access_token', $data["accessToken"]["access_token"], time() + 3600, "/", '');
       return redirect('Dashboard/dashboard');
@@ -179,8 +184,13 @@ class Auth extends BaseController
 
     // check token sudah di update  dan ada di database
     if (is_array($getUserToken) && is_array($getUserID)) {
-      setcookie('access_token', $data["token"]->getToken(), time() + 3600, "/", '');
-      return redirect('Dashboard/dashboard');
+      // check status user ID nya
+      if ($getUserID[0]["STATUS"] == "aktif") {
+        setcookie('access_token', $data["token"]->getToken(), time() + 3600, "/", '');
+        return redirect('Dashboard/dashboard');
+      } else {
+        return redirect()->to('/login')->with("failed", "gagal login anda dinonaktifkan oleh admin");
+      }
     } else {
       setcookie('access_token', $data["token"]->getToken(), time() + 3600, "/", '');
       return redirect('Dashboard/dashboard');

@@ -1,3 +1,4 @@
+<?php $session = \Config\Services::session(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +11,9 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
   <!-- Google Fonts Roboto -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+  <!-- Sweetalert -->
+  <script src="<?= base_url('js/sweetalert2.min.js') ?>"></script>
+  <link rel="stylesheet" href="<?= base_url('style/sweetalert2.min.css') ?>">
   <!-- MDB -->
   <link rel="stylesheet" href="<?= base_url('MD/css/mdb.min.css'); ?>" />
 </head>
@@ -38,6 +42,7 @@
   </style>
   <section class="vh-100">
     <div class="container-fluid h-custom">
+      <div id="flash" data-flash="<?= $session->getFlashdata('success') ? $session->getFlashdata('success') : $session->getFlashdata('failed') ?>"></div>
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-md-9 col-lg-6 col-xl-5">
           <img src="<?= base_url('tourist_map.svg') ?>" class="img-fluid" alt="Sample image">
@@ -122,6 +127,19 @@
   <script type="text/javascript" src="<?= base_url('MD/js/mdb.min.js') ?>"></script>
   <!-- Custom scripts -->
   <script type="text/javascript"></script>
+  <script>
+    var flash = document.getElementById('flash');
+    var data = flash.getAttribute('data-flash');
+    console.log(data)
+
+    if (data) {
+      Swal.fire(
+        'perhatian!',
+        data,
+        'warning'
+      )
+    }
+  </script>
 </body>
 
 </html>
