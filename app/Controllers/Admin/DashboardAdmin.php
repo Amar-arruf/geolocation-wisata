@@ -13,6 +13,7 @@ class DashboardAdmin extends BaseController
     protected $username;
     protected $data;
     protected $session;
+    protected $breadcrumb;
     public function dashboard()
     {
         // check session 
@@ -31,6 +32,11 @@ class DashboardAdmin extends BaseController
         // ambil data wisata
         $modelWisata = new getLocationDash();
 
+        $this->breadcrumb = [
+            ["title" => "Dashboard"],
+            ["title" => "Data User"],
+        ];
+
         $this->data = [
             "username" => $this->session->get("username"),
             "data_users" => $modelUser->getAllDataUser(),
@@ -38,7 +44,8 @@ class DashboardAdmin extends BaseController
             "dataNonAktif" => $modelUser->getDataUserAktif("nonaktif"),
             "data_kecamatan" => $modelkecamatan->countDataKec(),
             "data_Desa" => $modeldesa->countData(),
-            "data_wisata" => $modelWisata->getAllDataWisata()
+            "data_wisata" => $modelWisata->getAllDataWisata(),
+            "breadcrumb" => $this->breadcrumb
         ];
 
         return view('DashboardAdmin/Pages/dashboardAdmin', $this->data);

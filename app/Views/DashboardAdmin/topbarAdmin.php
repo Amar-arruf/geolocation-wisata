@@ -9,8 +9,13 @@
   <!-- Topbar BreadCrumb-->
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="">Dashboard Admin</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+      <?php foreach ($breadcrumb as $key => $value) : ?>
+        <?php if ($key == count($breadcrumb) - 1) : ?>
+          <li class="breadcrumb-item active" aria-current="page"><?= $value['title'] ?></li>
+        <?php else : ?>
+          <li class="breadcrumb-item"><a href=""><?= $value['title'] ?></a></li>
+        <?php endif; ?>
+      <?php endforeach; ?>
     </ol>
   </nav>
 
@@ -26,8 +31,13 @@
       <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="breadcrumbDropdown">
         <nav aria-label="breadcrumb" class="mr-auto w-100">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="">Dashboard Admin</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+            <?php foreach ($breadcrumb as $key => $value) : ?>
+              <?php if ($key == count($breadcrumb) - 1) : ?>
+                <li class="breadcrumb-item active" aria-current="page"><?= $value['title'] ?></li>
+              <?php else : ?>
+                <li class="breadcrumb-item"><a href=""><?= $value['title'] ?></a></li>
+              <?php endif; ?>
+            <?php endforeach; ?>
           </ol>
         </nav>
       </div>

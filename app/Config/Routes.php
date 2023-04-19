@@ -69,6 +69,13 @@ $routes->get("/Dashboard/harioperasi/(:segment)/delete", "HariOperasional::delet
 
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
     $routes->get('dashboardadmin', 'DashboardAdmin::dashboard');
+    $routes->get('userdata', "Userlogin::index");
+    $routes->get('kecamatan', "Kecamatan::index");
+    $routes->get('desa', "Desa::index");
+
+    $routes->get('userdata/search', "Userlogin::search");
+    $routes->get('userdata/(:segment)/edit', "Userlogin::editState/$1");
+    $routes->get('userdata/(:segment)/hapus', "Userlogin::delete/$1");
     // tambahkan routes untuk controller di dalam folder Admin lainnya di sini
 });
 /*

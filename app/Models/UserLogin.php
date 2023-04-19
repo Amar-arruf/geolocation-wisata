@@ -8,8 +8,9 @@ use CodeIgniter\Model;
 class UserLogin extends Model
 {
     protected $table            = 'UserLogin';
+    protected $primaryKey       = 'ID_USER';
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ["ID_USER", "USERNAME", "GAMBAR_PROFIL", "EMAIL", "STATUS"];
 
     protected $db;
 
@@ -78,5 +79,38 @@ class UserLogin extends Model
         }
 
         return $this->where("STATUS", $data)->findAll();
+    }
+
+    public function search($keyword)
+    {
+        return $this->like("USERNAME", $keyword);
+    }
+
+    public function UbahStatus($id)
+    {
+        // check apakah data ada
+        $getdatauser = $this->find($id);
+
+        if (is_array($getdatauser)) {
+            // check ada statusnya aktif
+            if ($getdatauser["STATUS"] == "aktif") {
+                $data = [
+                    "STATUS" => "nonaktif"
+                ];
+                return $this->update($id, $data);
+            } else {
+                $data = [
+                    "STATUS" => "aktif"
+                ];
+                return $this->update($id, $data);
+            }
+        } else {
+            return "maaf data tidak dapat diubah";
+        }
+    }
+
+    public function HapusData($id)
+    {
+        return $this->delete($id);
     }
 }
