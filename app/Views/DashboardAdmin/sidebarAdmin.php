@@ -9,8 +9,8 @@
   <hr class="sidebar-divider my-0" style="border-top: 1px solid white;">
 
   <!-- Nav Item - Dashboard -->
-  <li class="nav-item <?= $uri->getSegment(3) === 'dashboardadmin' ? "active" : '' ?>">
-    <a class="nav-link" href="">
+  <li class="nav-item <?= $uri->getSegment(2) === 'dashboardadmin' ? "active" : '' ?>">
+    <a class="nav-link" href="<?= base_url('/admin/dashboardadmin') ?>">
       <i class="fa-solid fa-table"></i>
       <span>Dashboard</span>
     </a>
@@ -20,9 +20,9 @@
   <hr class="sidebar-divider" style="border-top: 1px solid white;">
 
   <!-- Nav Item - Tabel tambah data wisata -->
-  <li class="nav-item <?= $uri->getSegment(2) === 'tambahsport' ? 'active' : '' ?>">
-    <a class="nav-link" href="<?= base_url('/Dashboard/tambahsport') ?>">
-      <i class="fa-sharp fa-solid fa-location-dot"></i>
+  <li class="nav-item <?= $uri->getSegment(2) === 'userdata' ? 'active' : '' ?>">
+    <a class="nav-link" href="<?= base_url('/admin/userdata') ?>">
+      <i class="fa-solid fa-users"></i>
       <span>Data Users</span>
     </a>
   </li>
@@ -31,9 +31,9 @@
   <hr class="sidebar-divider" style="border-top: 1px solid white;">
 
   <!-- Nav Item - Tabel wisata -->
-  <li class="nav-item <?= $uri->getSegment(2) === 'tabelwisata' ? 'active' : '' ?>">
-    <a class="nav-link" href="<?= base_url('/Dashboard/tabelwisata') ?>">
-      <i class="fa-solid fa-table-columns"></i>
+  <li class="nav-item <?= $uri->getSegment(2) === 'kecamatan' ? 'active' : '' ?>">
+    <a class="nav-link" href="<?= base_url('/admin/kecamatan') ?>">
+      <i class="fa-solid fa-database"></i>
       <span>Data Kecamatan</span>
     </a>
   </li>
@@ -41,9 +41,9 @@
   <hr class="sidebar-divider" style="border-top: 1px solid white;">
 
   <!-- Nav Item - Tabel wisata -->
-  <li class="nav-item <?= $uri->getSegment(2) === 'gps' ? 'active' : '' ?> ">
-    <a class="nav-link" href="<?= base_url('/Dashboard/gps') ?>">
-      <i class="fa-solid fa-location-crosshairs"></i>
+  <li class="nav-item <?= $uri->getSegment(2) === 'desa' ? 'active' : '' ?> ">
+    <a class="nav-link" href="<?= base_url('/admin/desa') ?>">
+      <i class="fa-solid fa-database"></i>
       <span> Data Desa</span>
     </a>
   </li>
@@ -51,9 +51,9 @@
   <hr class="sidebar-divider" style="border-top: 1px solid white;">
 
   <!-- Nav Item - Tabel wisata -->
-  <li class="nav-item <?= $uri->getSegment(2) === 'gps' ? 'active' : '' ?> ">
-    <a class="nav-link" href="">
-      <i class="fa-solid fa-location-crosshairs"></i>
+  <li class="nav-item <?= $uri->getSegment(2) === 'datawisata' ? 'active' : '' ?> ">
+    <a class="nav-link" href="<?= base_url('/admin/datawisata') ?>">
+      <i class="fa-solid fa-database"></i>
       <span>Data Wisata</span>
     </a>
   </li>

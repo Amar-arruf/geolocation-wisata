@@ -103,8 +103,6 @@ class Auth extends BaseController
       $updateToken = $userToken->updateTokenDB(json_decode(json_encode($data["userProfile"]["id"])), $data["accessToken"]["access_token"], 'Google');
 
       if ($updateToken === "token berhasil di update") {
-        var_dump($getTokenGoogel);
-        var_dump($data["accessToken"]["access_token"]);
         echo "data token sudah dan diupdate!";
       } else {
         echo "gagal diupdate token";
@@ -159,7 +157,6 @@ class Auth extends BaseController
     // check kembalian dari variabel $getUserID
     if (is_array($getUserID)) {
       echo "data sudah ada";
-      var_dump($getUserID);
     } else {
       $addUser = $userLoginIG->addUser($data["user"]->toArray(), "Instagram");
       echo $addUser;

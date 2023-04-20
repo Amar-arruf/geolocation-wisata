@@ -72,6 +72,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->get('userdata', "Userlogin::index");
     $routes->get('kecamatan', "Kecamatan::index");
     $routes->get('desa', "Desa::index");
+    $routes->get('datawisata', "DataWisataUser::index");
 
     $routes->get('userdata/search', "Userlogin::search");
     $routes->get('userdata/(:segment)/edit', "Userlogin::editState/$1");
@@ -86,6 +87,8 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->post('desa/add', "Desa::add");
     $routes->post('desa/(:segment)/edit', "Desa::edit/$1");
     $routes->get('desa/(:segment)/hapus', "Desa::delete/$1");
+
+    $routes->get('datawisata/search', 'DataWisataUser::search');
     // tambahkan routes untuk controller di dalam folder Admin lainnya di sini
 });
 /*

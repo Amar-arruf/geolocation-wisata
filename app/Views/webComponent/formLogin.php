@@ -59,7 +59,7 @@
             </a>
 
             <a type="button" class="btn btn-primary btn-floating mx-1">
-              <i class="fab fa-tiktok"></i>
+              <i class="fab fa-facebook fa-2x"></i>
             </a>
           </div>
 
@@ -115,7 +115,7 @@
           <i class="fab fa-instagram"></i>
         </a>
         <a href="#!" class="text-white me-4">
-          <i class="fab fa-tiktok"></i>
+          <i class="fab fa-facebook"></i>
         </a>
       </div>
       <!-- Right -->

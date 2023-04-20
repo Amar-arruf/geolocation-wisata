@@ -34,7 +34,7 @@ class DashboardAdmin extends BaseController
 
         $this->breadcrumb = [
             ["title" => "Dashboard"],
-            ["title" => "Data User"],
+            ["title" => "Dashboard admin"],
         ];
 
         $this->data = [
