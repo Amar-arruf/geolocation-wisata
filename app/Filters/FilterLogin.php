@@ -37,10 +37,9 @@ class FilterLogin implements FilterInterface
         if (!isset($_COOKIE["access_token"])) {
             return redirect()->to('/login');
         }
-        // check apakah token expired
-        $cookie = get_cookie("access_token");
 
-        if ($cookie !== null) {
+
+        if (isset($_COOKIE["access_token"])) {
             $expire = get_cookie('access_token', true);
             if ($expire < time()) {
                 // Cookie sudah kadaluarsa dan perlu di update
@@ -67,7 +66,7 @@ class FilterLogin implements FilterInterface
                         exit;
                     } else {
                         // update token di database 
-                        $updateToken  = $UserTokenModels->updateTokenDB($getUserId, $accessToken["access_token"], 'Tiktok');
+                        $updateToken  = $UserTokenModels->updateTokenDB($getUserId, $accessToken["access_token"], 'Facebook');
                         setcookie('access_token', $accessToken["access_token"], time() + 3600, "/", '');
                         redirect("Dashboard/dashboard");
                         exit;

@@ -60,8 +60,12 @@ class Auth extends BaseController
   // authentification genereted code authorization dengan google
   public function loginGoogle()
   {
-    $googleOauth = new Oauth2google();
-    return redirect()->to($googleOauth->getAuthUrl());
+    if (isset($_COOKIE['access_token'])) {
+      return redirect('Dashboard/dashboard');
+    } else {
+      $googleOauth = new Oauth2google();
+      return redirect()->to($googleOauth->getAuthUrl());
+    }
   }
   // menukarkan code authorization ke akses token
   public function  googleCallback()
