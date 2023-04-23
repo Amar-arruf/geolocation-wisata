@@ -104,7 +104,7 @@ class Auth extends BaseController
     // check jika ada token di database dan token accses tidak sama  maka update
     if (is_array($getTokenGoogel) && $data["accessToken"]["access_token"] !== $getTokenGoogel[0]["ACCESS_TOKEN"]) {
 
-      $updateToken = $userToken->updateTokenDB(json_decode(json_encode($data["userProfile"]["id"])), $data["accessToken"]["access_token"], 'Google');
+      $updateToken = $userToken->updateTokenDB(json_decode(json_encode($data["userProfile"]["id"])), $data["accessToken"]["access_token"], $data["accessToken"]["refresh_token"], 'Google');
 
       if ($updateToken === "token berhasil di update") {
         echo "data token sudah dan diupdate!";
@@ -170,7 +170,7 @@ class Auth extends BaseController
 
     if (is_array($getUserToken) && $data["token"]->getToken() !== $getUserToken[0]["ACCESS_TOKEN"]) {
 
-      $updateTokenIg = $userTokenIG->updateTokenDB($data["user"]->toArray()["id"], $data["token"]->getToken(), 'Instagram');
+      $updateTokenIg = $userTokenIG->updateTokenDB($data["user"]->toArray()["id"], $data["token"]->getToken(), $data['token']->getRefreshToken(), 'Instagram');
 
       if ($updateTokenIg === "token berhasil di update") {
         echo "data token Instagram Sudah diupdate!";

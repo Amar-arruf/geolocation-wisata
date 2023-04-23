@@ -10,7 +10,7 @@ class UserToken extends Model
     protected $table            = 'token';
     protected $primaryKey       = 'ID_TOKEN';
     protected $protectFields    = true;
-    protected $allowedFields    = ["ID_TOKEN", "ACCESS_TOKEN", "EXPIRES_IN", "LOGIN_TYPE", "ID_AKUN"];
+    protected $allowedFields    = ["ID_TOKEN", "ACCESS_TOKEN", 'REFRESH_TOKEN', "EXPIRES_IN", "LOGIN_TYPE", "ID_AKUN"];
 
     protected $db;
 
@@ -34,13 +34,14 @@ class UserToken extends Model
         }
     }
 
-    public function updateTokenDB($idUser, $tokennew, $typeLogin)
+    public function updateTokenDB($idUser, $tokennew, $refresh_token, $typeLogin)
     {
         // $messagetoken = null;
         // update Token
         if ($typeLogin === 'Google') {
             $this->builder = $this->db->table($this->table);
             $this->builder->set('ACCESS_TOKEN', $tokennew);
+            $this->builder->set('REFRESH_TOKEN', $refresh_token);
             $this->builder->where('ID_TOKEN', 'G-' . $idUser);
             $this->builder->update();
 
@@ -52,6 +53,7 @@ class UserToken extends Model
         } else {
             $this->builder = $this->db->table($this->table);
             $this->builder->set('ACCESS_TOKEN', $tokennew);
+            $this->builder->set('REFRESH_TOKEN', $refresh_token);
             $this->builder->where('ID_TOKEN', 'IG-' . $idUser);
             $this->builder->update();
 
@@ -77,6 +79,7 @@ class UserToken extends Model
             $data = [
                 'ID_TOKEN' => 'G-' . $id_Akun,
                 'ACCESS_TOKEN' => $arr['access_token'],
+                'REFRESH_TOKEN' => $arr['refresh_token'],
                 'EXPIRES_IN' => $arr['expires_in'],
                 'LOGIN_TYPE' =>  $typeLogin,
                 'ID_AKUN' => $id_Akun
@@ -85,6 +88,7 @@ class UserToken extends Model
             $data = [
                 'ID_TOKEN' => 'IG-' . $id_Akun,
                 'ACCESS_TOKEN' => $arr->getToken(),
+                'REFRESH_TOKEN' => $arr->getRefreshToken(),
                 'EXPIRES_IN' => $arr->getExpires(),
                 'LOGIN_TYPE' =>  $typeLogin,
                 'ID_AKUN' => $id_Akun

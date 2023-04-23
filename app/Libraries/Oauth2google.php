@@ -45,8 +45,8 @@ class Oauth2google
       $this->client->setAccessToken($token);
    }
 
-   public function RefreshToken()
+   public function RefreshToken($refresh_token)
    {
-      return $this->client->fetchAccessTokenWithRefreshToken($this->client->getRefreshToken());
+      return $this->client->fetchAccessTokenWithRefreshToken($refresh_token);
    }
 }

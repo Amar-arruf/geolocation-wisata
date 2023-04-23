@@ -31,7 +31,6 @@ class FilterLogin implements FilterInterface
         $googleClient = new Oauth2google();
         $UserTokenModels = new UserToken();
         $getUserId = null;
-        helper('cookie');
 
         // check user sudah ter authentification
         if (!isset($_COOKIE["access_token"])) {
@@ -40,41 +39,34 @@ class FilterLogin implements FilterInterface
 
 
         if (isset($_COOKIE["access_token"])) {
-            $expire = get_cookie('access_token', true);
-            if ($expire < time()) {
-                // Cookie sudah kadaluarsa dan perlu di update
-                $accessToken = $googleClient->RefreshToken();
-                $googleClient->setAccessToken($accessToken);
-                // mendapatkan token sebelumnya 
-                $getTokenOld = $UserTokenModels->getToken(get_cookie('access_token'));
 
-                if (is_array($getTokenOld)) {
-                    // dapatkan userId
-                    $getUserId = $getTokenOld[0]["ID_AKUN"];
-                    // check login type 
-                    if ($getTokenOld[0]["LOGIN_TYPE"] == 'Google') {
-                        // update token di database 
-                        $updateToken  = $UserTokenModels->updateTokenDB($getUserId, $accessToken["access_token"], $getTokenOld[0]["LOGIN_TYPE"]);
-                        setcookie('access_token', $accessToken["access_token"], time() + 3600, "/", '');
-                        redirect("Dashboard/dashboard");
-                        exit;
-                    } else  if ($getTokenOld[0]["LOGIN_TYPE"] == 'Instagram') {
-                        // update token di database 
-                        $updateToken  = $UserTokenModels->updateTokenDB($getUserId, $accessToken["access_token"], $getTokenOld[0]["LOGIN_TYPE"]);
-                        setcookie('access_token', $accessToken["access_token"], time() + 3600, "/", '');
-                        redirect("Dashboard/dashboard");
-                        exit;
-                    } else {
-                        // update token di database 
-                        $updateToken  = $UserTokenModels->updateTokenDB($getUserId, $accessToken["access_token"], 'Facebook');
-                        setcookie('access_token', $accessToken["access_token"], time() + 3600, "/", '');
-                        redirect("Dashboard/dashboard");
-                        exit;
-                    }
+            // mendapatkan token sebelumnya 
+            $getTokenOld = $UserTokenModels->getToken(isset($_COOKIE["access_token"]));
+
+            if (is_array($getTokenOld)) {
+                // dapatkan userId
+                $getUserId = $getTokenOld[0]["ID_AKUN"];
+                // check login type 
+                if ($getTokenOld[0]["LOGIN_TYPE"] == 'Google') {
+                    $getRefreshToken_Exist = $getTokenOld[0]["REFRESH_TOKEN"];
+                    $refresh_token = $googleClient->RefreshToken($getRefreshToken_Exist);
+                    // update token di database 
+                    $updateToken  = $UserTokenModels->updateTokenDB($getUserId, $refresh_token["access_token"], $refresh_token["refresh_token"], $getTokenOld[0]["LOGIN_TYPE"]);
+                    setcookie('access_token', $refresh_token["access_token"], time() + 3600, "/", '');
+                    // } else  if ($getTokenOld[0]["LOGIN_TYPE"] == 'Instagram') {
+                    //     // update token di database 
+                    //     $updateToken  = $UserTokenModels->updateTokenDB($getUserId, $accessToken["access_token"], $getTokenOld[0]["LOGIN_TYPE"]);
+                    //     setcookie('access_token', $accessToken["access_token"], time() + 3600, "/", '');
+                    //     redirect("Dashboard/dashboard");
+                    //     exit;
+                    // } else {
+                    //     // update token di database 
+                    //     $updateToken  = $UserTokenModels->updateTokenDB($getUserId, $accessToken["access_token"], 'Facebook');
+                    //     setcookie('access_token', $accessToken["access_token"], time() + 3600, "/", '');
+                    //     redirect("Dashboard/dashboard");
+                    //     exit;
+                    // }
                 }
-            } else {
-                // Cookie masih berlaku
-                redirect("Dashboard/dashboard");
             }
         }
     }
