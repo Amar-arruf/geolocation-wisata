@@ -3,6 +3,7 @@
 namespace App\Filters;
 
 use App\Libraries\Oauth2google;
+use App\Libraries\Oauth2Instagram;
 use App\Models\UserToken;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
@@ -30,7 +31,9 @@ class FilterLogin implements FilterInterface
         //
         $googleClient = new Oauth2google();
         $UserTokenModels = new UserToken();
+        $InstagramClient = new Oauth2Instagram();
         $getUserId = null;
+
 
         // check user sudah ter authentification
         if (!isset($_COOKIE["access_token"])) {
@@ -52,20 +55,15 @@ class FilterLogin implements FilterInterface
                     $refresh_token = $googleClient->RefreshToken($getRefreshToken_Exist);
                     // update token di database 
                     $updateToken  = $UserTokenModels->updateTokenDB($getUserId, $refresh_token["access_token"], $refresh_token["refresh_token"], $getTokenOld[0]["LOGIN_TYPE"]);
-                    setcookie('access_token', $refresh_token["access_token"], time() + 3600, "/", '');
-                    // } else  if ($getTokenOld[0]["LOGIN_TYPE"] == 'Instagram') {
-                    //     // update token di database 
-                    //     $updateToken  = $UserTokenModels->updateTokenDB($getUserId, $accessToken["access_token"], $getTokenOld[0]["LOGIN_TYPE"]);
-                    //     setcookie('access_token', $accessToken["access_token"], time() + 3600, "/", '');
-                    //     redirect("Dashboard/dashboard");
-                    //     exit;
-                    // } else {
-                    //     // update token di database 
-                    //     $updateToken  = $UserTokenModels->updateTokenDB($getUserId, $accessToken["access_token"], 'Facebook');
-                    //     setcookie('access_token', $accessToken["access_token"], time() + 3600, "/", '');
-                    //     redirect("Dashboard/dashboard");
-                    //     exit;
-                    // }
+                    if ($updateToken === 'token berhasil di update') {
+                        setcookie('access_token', $refresh_token["access_token"], time() + 3600, "/", '');
+                    }
+                } else  if ($getTokenOld[0]["LOGIN_TYPE"] == 'Instagram') {
+                    // perbarui cookiesnya saja karena umur token sudah 90 hari
+                    $getaccessToken = $getTokenOld[0]["ACCESS_TOKEN"];
+                    setcookie('access_token', $getaccessToken, time() + 3600, "/", '');
+                } else {
+                    // auth facebook
                 }
             }
         }

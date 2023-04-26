@@ -20,6 +20,7 @@ class Oauth2Instagram
       'clientId'          => getenv('id_apk'),
       'clientSecret'      => getenv('secret_key_apk'),
       'redirectUri'       => base_url('login/auth/ig/callback'),
+      'graphApiVersion'   => 'v3.0',
       'host'              => 'https://api.instagram.com',  // Optional,  secara default https://api.instagram.com
       'graphHost'         => 'https://graph.instagram.com' // Optional,  secara default https://graph.instagram.com
     ]);
@@ -55,18 +56,21 @@ class Oauth2Instagram
         'code' => $_GET['code']
       ]);
 
+      // tukarkan refresh_token umur yang panjang dengan durasi 90 hari
+      $longLivedToken = $this->requestTokenLonglive($token);
+
       // setelah mendapatkan token kamu dapat melihat users profile data 
       try {
 
         // We got an access token, let's now get the user's details
-        $user = $this->private->getResourceOwner($token);
+        $user = $this->private->getResourceOwner($longLivedToken);
 
 
 
         // Use these details to create a new profile
         return [
           "user" => $user,
-          "token" => $token
+          "token" => $longLivedToken
         ];
       } catch (\Exception $e) {
 
@@ -79,26 +83,9 @@ class Oauth2Instagram
     }
   }
 
-  public function requestTokenLonglive()
+  public function requestTokenLonglive($access_token)
   {
-    $token = $this->private->getAccessToken('authorization_code', [
-      'code' => $_GET['code']
-    ]);
-
-    $longLivedToken = $this->private->getLongLivedAccessToken($token);
+    $longLivedToken = $this->private->getLongLivedAccessToken($access_token);
     return $longLivedToken;
-  }
-
-  public function refreshTokenLongLive()
-  {
-    $token = $this->private->getAccessToken('authorization_code', [
-      'code' => $_GET['code']
-    ]);
-
-    // perlu mengambil first token yang umurnya panjang
-    $longLivedToken = $this->private->getLongLivedAccessToken($token);
-
-    $refreshToken = $this->private->getRefreshedAccessToken($longLivedToken);
-    return $refreshToken;
   }
 }
