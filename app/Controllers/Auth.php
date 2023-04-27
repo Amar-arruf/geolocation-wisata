@@ -2,11 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Libraries\Oauth2facebook;
 use App\Libraries\Oauth2google;
 use App\Libraries\Oauth2Instagram;
 use App\Models\Akun;
 use App\Models\UserLogin;
 use App\Models\UserToken;
+
+use function PHPUnit\Framework\callback;
 
 $db = db_connect();
 
@@ -135,9 +138,13 @@ class Auth extends BaseController
   // authentification ke Instagram dan mendapatkan code authorization dengan Instagram
   public function loginInstagram()
   {
-    $IGOauth = new Oauth2Instagram();
-    // jalankan metode Authorization pada class IGOauth untuk mendapatkan Code authorization
-    $IGOauth->Authorization();
+    if (isset($_COOKIE["access_token"])) {
+      return redirect('Dashboard/dashboard');
+    } else {
+      $IGOauth = new Oauth2Instagram();
+      // jalankan metode Authorization pada class IGOauth untuk mendapatkan Code authorization
+      $IGOauth->Authorization();
+    }
   }
 
   public function instagramCallback()
@@ -180,6 +187,72 @@ class Auth extends BaseController
       }
     } else {
       $addToken = $userTokenIG->addToken($data["token"], $data["user"]->toArray()["id"], "Instagram");
+      echo $addToken;
+    }
+
+    // check token sudah di update  dan ada di database
+    if (is_array($getUserToken) && is_array($getUserID)) {
+      // check status user ID nya
+      if ($getUserID[0]["STATUS"] == "aktif") {
+        setcookie('access_token', $data["token"]->getToken(), time() + 3600, "/", '');
+        return redirect('Dashboard/dashboard');
+      } else {
+        return redirect()->to('/login')->with("failed", "gagal login anda dinonaktifkan oleh admin");
+      }
+    } else {
+      setcookie('access_token', $data["token"]->getToken(), time() + 3600, "/", '');
+      return redirect('Dashboard/dashboard');
+    }
+  }
+
+  public function loginFacebook()
+  {
+    if (isset($_COOKIE['access_token'])) {
+      return redirect("Dashboard/dashboard");
+    } else {
+      $FbOauth2 = new Oauth2facebook();
+      // dapatkan authorize code dari facebook
+      $FbOauth2->Authorization();
+    }
+  }
+
+  public function FBcallback()
+  {
+    $fbOauth2 = new Oauth2facebook();
+    $data = $fbOauth2->Authorization();
+    // simpan user dan token
+
+    $userLoginFB = new UserLogin();
+    $userTokenFB = new UserToken();
+
+    // Simpan ke database user account dan Token 
+
+    $getUserID = $userLoginFB->getUserLogin($data["user"]->toArray()["id"]);
+    $getUserToken =  $userTokenFB->getTokenUser($data["user"]->toArray()["id"]);
+
+
+    // check kembalian dari variabel $getUserID
+    if (is_array($getUserID)) {
+      echo "data sudah ada";
+    } else {
+      $addUser = $userLoginFB->addUser($data["user"]->toArray(), "Facebook");
+      echo $addUser;
+    }
+
+    // check jika ada token di database dan token accses tidak sama  maka update
+
+    if (is_array($getUserToken) && $data["token"]->getToken() !== $getUserToken[0]["ACCESS_TOKEN"]) {
+
+      $updateTokenIg = $userTokenFB->updateTokenDB($data["user"]->toArray()["id"], $data["token"]->getToken(), $data['token']->getRefreshToken(), 'Instagram');
+
+      if ($updateTokenIg === "token berhasil di update") {
+        echo "data token Instagram Sudah diupdate!";
+        var_dump($getUserToken);
+      } else {
+        var_dump("token gagal di update");
+      }
+    } else {
+      $addToken = $userTokenFB->addToken($data["token"], $data["user"]->toArray()["id"], "Instagram");
       echo $addToken;
     }
 

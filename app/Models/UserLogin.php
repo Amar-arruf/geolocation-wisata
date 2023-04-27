@@ -43,14 +43,24 @@ class UserLogin extends Model
                 "ID_USER" => $arr['id'],
                 "USERNAME" => $arr['name'],
                 "GAMBAR_PROFIL" => $arr['picture'],
-                "EMAIL" => $arr['email']
+                "EMAIL" => $arr['email'],
+                "STATUS" => 'aktif'
             ];
-        } else {
+        } else if ($typeLogin === "Instagram") {
             $data = [
                 "ID_USER" => $arr['id'],
                 "USERNAME" => $arr['username'],
                 "GAMBAR_PROFIL" => null,
-                "EMAIL" => null
+                "EMAIL" => null,
+                "STATUS" => 'aktif'
+            ];
+        } else {
+            $data = [
+                "ID_USER" => $arr['id'],
+                "USERNAME" => $arr['name'],
+                "GAMBAR_PROFIL" => $arr['picture_url'],
+                "EMAIL" => null,
+                "STATUS" => 'aktif'
             ];
         }
 

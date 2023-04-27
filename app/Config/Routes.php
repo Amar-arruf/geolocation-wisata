@@ -2,8 +2,6 @@
 
 namespace Config;
 
-use App\Controllers\Auth;
-use App\Controllers\GPS;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
@@ -37,6 +35,8 @@ $routes->get('/login/auth/google', 'Auth::loginGoogle');
 $routes->get('/login/auth/google/callback', 'Auth::googleCallback');
 $routes->get('/login/auth/ig', 'Auth::loginInstagram');
 $routes->get('/login/auth/ig/callback', 'Auth::instagramCallback');
+$routes->get('/login/auth/fb', 'Auth::loginFacebook');
+$routes->get('/login/auth/fb/callback', 'Auth::FBcallback');
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
