@@ -63,7 +63,9 @@ class FilterLogin implements FilterInterface
                     $getaccessToken = $getTokenOld[0]["ACCESS_TOKEN"];
                     setcookie('access_token', $getaccessToken, time() + 3600, "/", '');
                 } else {
-                    // auth facebook
+                    // perbarui cookiesnya saja karena umur token sudah 90 hari
+                    $getaccessToken = $getTokenOld[0]["ACCESS_TOKEN"];
+                    setcookie('access_token', $getaccessToken, time() + 3600, "/", '');
                 }
             }
         }

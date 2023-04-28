@@ -67,6 +67,9 @@ $routes->get("Dashboard/harioperasi/search", "HariOperasional::search");
 $routes->post("/Dashboard/harioperasi/(:segment)/edit", "HariOperasional::edit/$1");
 $routes->get("/Dashboard/harioperasi/(:segment)/delete", "HariOperasional::delete/$1");
 
+$routes->post('facebook/delete-user-data', 'FacebookController::deleteUserData');
+
+
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
     $routes->get('dashboardadmin', 'DashboardAdmin::dashboard');
     $routes->get('userdata', "Userlogin::index");
