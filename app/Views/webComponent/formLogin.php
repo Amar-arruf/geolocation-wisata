@@ -58,7 +58,7 @@
               <i class="fab fa-instagram"></i>
             </a>
 
-            <a type="button" class="btn btn-primary btn-floating mx-1">
+            <a type="button" href="<?= base_url('/login/auth/fb') ?>" class="btn btn-primary btn-floating mx-1">
               <i class="fab fa-facebook fa-2x"></i>
             </a>
           </div>
