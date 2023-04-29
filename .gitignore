@@ -127,7 +127,7 @@ nb-configuration.xml
 
 # Folder public
 
-public/vendorCustom/
-publi/MD/
-public/bootstrap/
-public/js/
+# public/vendorCustom/
+# publi/MD/
+# public/bootstrap/
+# public/js/
