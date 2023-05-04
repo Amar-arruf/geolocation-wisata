@@ -241,7 +241,7 @@ class Auth extends BaseController
 
     if (is_array($getUserToken) && $data["token"]->getToken() !== $getUserToken[0]["ACCESS_TOKEN"]) {
 
-      $updateTokenIg = $userTokenFB->updateTokenDB($data["user"]->toArray()["id"], $data["token"]->getToken(), $data['token']->getRefreshToken(), 'Instagram');
+      $updateTokenIg = $userTokenFB->updateTokenDB($data["user"]->toArray()["id"], $data["token"]->getToken(), $data['token']->getRefreshToken(), 'Facebook');
 
       if ($updateTokenIg === "token berhasil di update") {
         echo "data token Instagram Sudah diupdate!";
@@ -250,7 +250,7 @@ class Auth extends BaseController
         var_dump("token gagal di update");
       }
     } else {
-      $addToken = $userTokenFB->addToken($data["token"], $data["user"]->toArray()["id"], "Instagram");
+      $addToken = $userTokenFB->addToken($data["token"], $data["user"]->toArray()["id"], "Facebook");
       echo $addToken;
     }
 
