@@ -9,8 +9,6 @@ use App\Models\Akun;
 use App\Models\UserLogin;
 use App\Models\UserToken;
 
-use function PHPUnit\Framework\callback;
-
 $db = db_connect();
 
 
@@ -273,8 +271,7 @@ class Auth extends BaseController
 
   public function logout()
   {
-    helper('cookie');
-    delete_cookie("access_token");
+    setcookie("access_token", "", time() - 3600);
     return redirect()->to('/login');
   }
 }
