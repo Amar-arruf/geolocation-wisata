@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 
 class UserLogin extends Model
 {
-    protected $table            = 'UserLogin';
+    protected $table            = 'userlogin';
     protected $primaryKey       = 'ID_USER';
     protected $protectFields    = true;
     protected $allowedFields    = ["ID_USER", "USERNAME", "GAMBAR_PROFIL", "EMAIL", "STATUS"];
