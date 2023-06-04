@@ -100,7 +100,7 @@
         confirmButtonText: 'ya, hapus itu!'
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = `https://geolocationwisata.com/admin/userdata/${getID}/hapus`;
+          window.location.href = `http://localhost:8080/admin/userdata/${getID}/hapus`;
         }
       })
     })
@@ -121,7 +121,7 @@
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          window.location.href = `https://geolocationwisata.com/admin/userdata/${dapatID}/edit`
+          window.location.href = `http://localhost:8080/admin/userdata/${dapatID}/edit`
         } else if (result.isDenied) {
           Swal.fire('Perubahan tidak tersimpan!', '', 'info')
         }
