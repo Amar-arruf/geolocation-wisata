@@ -11,7 +11,9 @@ RUN docker-php-ext-install mysqli
 RUN apt-get update && \
     apt-get install -y libicu-dev && \
     docker-php-ext-install intl && \
-    docker-php-ext-enable intl
+    docker-php-ext-enable intl && \
+    docker-php-ext-install mbstring && \
+    docker-php-ext-enable mbstring
 
 # pindahkan kode project ke direktori kerja Apache
 COPY . /var/www/html
