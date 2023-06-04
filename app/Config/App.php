@@ -17,7 +17,7 @@ class App extends BaseConfig
      *
      *    http://example.com/
      */
-    public string $baseURL = 'https://geolocationwisata.com/';
+    public string $baseURL = 'http://localhost:8080';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
@@ -130,7 +130,7 @@ class App extends BaseConfig
      * secure, the user will be redirected to a secure version of the page
      * and the HTTP Strict Transport Security header will be set.
      */
-    public bool $forceGlobalSecureRequests = true;
+    public bool $forceGlobalSecureRequests = false;
 
     /**
      * --------------------------------------------------------------------------

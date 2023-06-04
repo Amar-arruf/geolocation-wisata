@@ -92,16 +92,3 @@ define('EVENT_PRIORITY_NORMAL', 100);
  * @deprecated Use \CodeIgniter\Events\Events::PRIORITY_HIGH instead.
  */
 define('EVENT_PRIORITY_HIGH', 10);
-
-/*
-  -------------------------------------------------
-  SETTING BASE URL PROTOKOL 
-  -------------------------------------------------
-*/
-
-
-$myappBaseUrl = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
-$myappBaseUrl .= "://".$_SERVER['HTTP_HOST'];
-$myappBaseUrl .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
-        
-defined('BASESEURL') || define('BASESEURL',$myappBaseUrl);

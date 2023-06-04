@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
         'DSN'      => '',
-        'hostname' => 'localhost',
-        'username' => 'root',
-        'password' => '',
-        'database' => 'wisata_geolocation',
+        'hostname' => 'sql12.freemysqlhosting.net',
+        'username' => 'sql12623539',
+        'password' => 'eYibIphX1E',
+        'database' => 'sql12623539',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => true,
