@@ -1,5 +1,3 @@
-# escape=`
-
 # images
 FROM php:8.1-apache
 
@@ -10,9 +8,9 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.
 
 # install dependencies
 RUN docker-php-ext-install mysqli
-RUN apt-get update && `
-    apt-get install -y libicu-dev && `
-    docker-php-ext-install intl && `
+RUN apt-get update && \
+    apt-get install -y libicu-dev && \
+    docker-php-ext-install intl && \
     docker-php-ext-enable intl
 
 # pindahkan kode project ke direktori kerja Apache
