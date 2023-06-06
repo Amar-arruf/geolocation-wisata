@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
+use App\Libraries\Oauth2Instagram;
 use App\Libraries\Oauth2facebook;
 use App\Libraries\Oauth2google;
-use App\Libraries\Oauth2Instagram;
 use App\Models\Akun;
 use App\Models\UserLogin;
 use App\Models\UserToken;
