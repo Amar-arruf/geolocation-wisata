@@ -91,7 +91,7 @@
       const getID = DeleteItem.getAttribute('data-id');
 
       Swal.fire({
-        title: 'Apa kamu yakin?',
+        title: 'kamu yakin?',
         text: `ingin menghapus data dengan id ${getID}`,
         icon: 'warning',
         showCancelButton: true,
@@ -113,7 +113,7 @@
       const dapatID = EditItem.getAttribute('data-id');
 
       Swal.fire({
-        title: `Apakah kamu ingin mengubah status dari akun dengan id ${dapatID} ?`,
+        title: `kamu ingin mengubah status dari akun dengan id ${dapatID} ?`,
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: 'Simpan',
