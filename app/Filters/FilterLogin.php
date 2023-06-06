@@ -3,7 +3,6 @@
 namespace App\Filters;
 
 use App\Libraries\Oauth2google;
-use App\Libraries\Oauth2Instagram;
 use App\Models\UserToken;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
@@ -31,7 +30,6 @@ class FilterLogin implements FilterInterface
         //
         $googleClient = new Oauth2google();
         $UserTokenModels = new UserToken();
-        $InstagramClient = new Oauth2Instagram();
         $getUserId = null;
 
 
