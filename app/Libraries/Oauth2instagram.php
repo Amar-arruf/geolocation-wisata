@@ -4,7 +4,7 @@ namespace App\Libraries;
 
 use League\OAuth2\Client\Provider\Instagram;
 
-class Oauth2Instagram
+class Oauth2instagram
 {
   private $private;
 

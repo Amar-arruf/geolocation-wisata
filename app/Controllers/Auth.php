@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Libraries\Oauth2Instagram;
+use App\Libraries\Oauth2instagram;
 use App\Libraries\Oauth2facebook;
 use App\Libraries\Oauth2google;
 use App\Models\Akun;
@@ -139,7 +139,7 @@ class Auth extends BaseController
     if (isset($_COOKIE["access_token"])) {
       return redirect('Dashboard/dashboard');
     } else {
-      $IGOauth = new Oauth2Instagram();
+      $IGOauth = new Oauth2instagram();
       // jalankan metode Authorization pada class IGOauth untuk mendapatkan Code authorization
       $IGOauth->Authorization();
     }
@@ -147,7 +147,7 @@ class Auth extends BaseController
 
   public function instagramCallback()
   {
-    $IGOauth = new Oauth2Instagram();
+    $IGOauth = new Oauth2instagram();
     // jalankan metode authorization untuk menukarkan kode ke dalam acces tokken 
     $data = $IGOauth->Authorization();
 
