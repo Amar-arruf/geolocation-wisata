@@ -52,8 +52,8 @@ $routes->get('Dashboard/admin/dashboard', 'Admin\DashboardAdmin::dashboard');
 $routes->post('/Dashboard/tambahsport/add', "TambahSpot::add");
 
 $routes->get('/Dashboard/tabelwisata/search', 'Tabelwisata::search');
-$routes->post('/Dashboard/tabelwisata/(:segment)/edit', 'Tabelwisata::edit/$1');
-$routes->get('/Dashboard/tabelwisata/(:segment)/(:segment)/(:segment)/delete', 'Tabelwisata::delete/$1/$2/$3');
+$routes->post('/Dashboard/tabelwisata/(:segment)/edit', 'TabelWisata::edit/$1');
+$routes->get('/Dashboard/tabelwisata/(:segment)/(:segment)/(:segment)/delete', 'TabelWisata::delete/$1/$2/$3');
 
 $routes->get("/Dasgboard/gps/search", "GPS::search");
 $routes->post('/Dashboard/gps/(:segment)/edit', 'GPS::edit/$1');
