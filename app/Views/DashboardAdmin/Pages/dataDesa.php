@@ -47,7 +47,7 @@
                     <span class="icon text-white-50">
                       <i class="fas fa-pen-to-square"></i>
                     </span>
-                    <span class="text">edit kecamatan</span>
+                    <span class="text">Edit Desa</span>
                   </button>
                   <button data-id="<?= $row["ID_DESA"]; ?>" class="btn btn-danger btn-sm btn-icon-split delete">
                     <span class="icon text-white-50">
