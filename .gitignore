@@ -122,10 +122,11 @@ nb-configuration.xml
 /results/
 /phpunit*.xml
 /.phpunit.*.cache
+vendor/*
 
-# Folder public
+Folder public
 
-# public/vendorCustom/
-# publi/MD/
-# public/bootstrap/
-# public/js/
+public/vendorCustom/
+publi/MD/
+public/bootstrap/
+public/js/
