@@ -111,13 +111,14 @@ class TambahSpot extends BaseController
 
   public function add()
   {
-    helper('GenereteRandomId');
+    helper('id_helper');
+    $idWisata = 'W' . generated_random_id();
 
     $getIduser = $this->getUserId();
     $this->conn = db_connect();
     // tambah tabel profil wisata
     $datawisata = [
-      "ID" => 'W' . generated_random_id(),
+      "ID" => $idWisata,
       "NAMA" => $_POST["nama"],
       "VIDEO" => null,
       "DESKRIPSI_TEXT" => null,
@@ -133,18 +134,11 @@ class TambahSpot extends BaseController
     $getIDLast = $this->conn->table('gps')->select("KODE")->orderBy("KODE", 'DESC')->limit(1)->get()->getResultArray();
 
     // generete ID
-    if (count($getIDLast) !== 0) {
-      $new_number = intval(substr($getIDLast[0]["KODE"], 3)) + 1;
-      $newidgps = 'GPS' . $new_number;
-    } else {
-      $new_number = 1;
-      $newidgps = 'GPS' . $new_number;
-    }
 
 
     $dataGPS = [
-      "KODE" => $newidgps,
-      "ID" => $_POST["id"],
+      "KODE" => 'GPS' . generated_random_id(),
+      "ID" => $idWisata,
       "KODE_POS" => "62381",
       "LONGITUDE" => $_POST["longitude"],
       "ALTITUDE" => $_POST["latitude"]
@@ -158,22 +152,16 @@ class TambahSpot extends BaseController
     // generete ID
     $getIdLastuploader = $this->conn->table('uploader')->select("KODE_UPLOADER")->orderBy('KODE_UPLOADER', 'DESC')->limit(1)->get()->getResultArray();
 
-    if (count($getIdLastuploader) !== 0) {
-      $new_numUp = intval(substr($getIdLastuploader[0]["KODE_UPLOADER"], 2)) + 1;
-      $newidup = 'UP' . $new_numUp;
-    } else {
-      $new_numUp = 1;
-      $newidup = 'UP' . $new_numUp;
-    }
+    $newidup = 'UP' . generated_random_id();
 
 
     $getUserLogin = new UserLogin();
-    $getData = $getUserLogin->getUserLogin($getIduser);
+    $getDataUser = $getUserLogin->getUserLogin($getIduser);
 
     $dataUploade = [
       "KODE_UPLOADER" => $newidup,
-      "USER_ID" => $getData[0]["ID_USER"],
-      "ID" => $_POST["id"],
+      "USER_ID" => $getDataUser[0]["ID_USER"],
+      "ID" => $idWisata,
       "WISATA" => $_POST["nama"]
     ];
     // tambah data user id
@@ -183,20 +171,15 @@ class TambahSpot extends BaseController
 
     // generete ID 
     $getIdLastDayOperasi = $this->conn->table('hari_operasional_wisata')->select("ID_OPERASIONAL")->orderBy('ID_OPERASIONAL', 'DESC')->limit(1)->get()->getResultArray();
-    if (count($getIdLastDayOperasi) !== 0) {
-      $new_numDO = intval(substr($getIdLastDayOperasi[0]["ID_OPERASIONAL"], 2)) + 1;
-      $newIdOP = "OP" . $new_numDO;
-    } else {
-      $new_numDO = 1;
-      $newIdOP = "OP" . $new_numDO;
-    }
+
+
 
 
     $dataUpDO = [
-      "ID_OPERASIONAL" => $newIdOP,
+      "ID_OPERASIONAL" => 'OP' . generated_random_id(),
       "KODE_POS" => null,
       "KODE_UPLOADER" => $newidup,
-      "ID" => $_POST["id"],
+      "ID" => $idWisata,
       "KODE_JAM_OPERASI" => '1M',
       "HARI_OPERASIONAL" => '7 hari'
     ];
@@ -219,12 +202,12 @@ class TambahSpot extends BaseController
     $responseUploadImageToCloaud = $this->Cloudinary->Upload($getGambar->getTempName(), $optionConf);
 
     // upload ke postingan facebook
-    $getAkun = $this->Token->getToken($_COOKIE["access_token"]);
-    $getTypeLogin = $getAkun[0]["LOGIN_TYPE"];
-    if ($getTypeLogin === "Facebook") {
-      $getPostMessage = $this->request->getPost("posting");
-      $AddPost = $this->addPost($getTypeLogin, $responseUploadImageToCloaud["secure_url"], $getPostMessage . " " . base_url());
-    }
+    // $getAkun = $this->Token->getToken($_COOKIE["access_token"]);
+    // $getTypeLogin = $getAkun[0]["LOGIN_TYPE"];
+    // if ($getTypeLogin === "Facebook") {
+    //   $getPostMessage = $this->request->getPost("posting");
+    //   $AddPost = $this->addPost($getTypeLogin, $responseUploadImageToCloaud["secure_url"], $getPostMessage . " " . base_url());
+    // }
 
 
     if ($responseAddWisata && $responseaddGPS && $responseAddUpload && $responseADDDayOP && ($responseUploadImageToCloaud && !is_null($responseUploadImageToCloaud))) {

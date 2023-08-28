@@ -90,10 +90,6 @@
       <div class="modal-body">
         <form action="<?= base_url('/Dashboard/tambahsport/add') ?>" method="post" enctype="multipart/form-data">
           <div class="mb-3">
-            <label for="formControlID" class="form-label">id</label>
-            <input type="text" class="form-control" name="id" id="formControlID" placeholder="ID Wisata">
-          </div>
-          <div class="mb-3">
             <label for="formControlname" class="form-label">Nama Wisata</label>
             <input type="text" class="form-control" name="nama" id="formControlname" placeholder="Nama Wisata">
           </div>
