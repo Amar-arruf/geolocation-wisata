@@ -47,6 +47,36 @@ class TabelWisata extends BaseController
     return view('Dashboard/Page/tabelwisata', $userData);
   }
 
+  public function filter()
+  {
+    $dataFilter = new getLocationDash();
+    $dataUser = new UserLogin();
+
+    $this->Token = new UserToken();
+    $getToken = $this->Token->getToken($_COOKIE["access_token"]);
+
+    if (isset($_COOKIE["access_token"])) {
+      $this->UserId = $getToken[0]["ID_AKUN"];
+    }
+
+    // dapatkan data dari filter radio button 
+    $get_radio_value = $this->request->getGet('filter_button');
+    $dataFilter->filter($get_radio_value);
+
+    $dataUserLogin = $dataUser->getUserLogin($this->UserId);
+
+    $data = [
+      'id_user' => $dataUserLogin[0]["ID_USER"],
+      'username' => $dataUserLogin[0]["USERNAME"],
+      'poto_profil' => $dataUserLogin[0]["GAMBAR_PROFIL"],
+      // pagination   
+      'pagerWisata' => $dataFilter->paginate(3),
+      'pager' => $dataFilter->pager
+    ];
+
+    return view('Dashboard/Page/tabelwisata', $data);
+  }
+
   public function search()
   {
     $data = array();

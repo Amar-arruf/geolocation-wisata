@@ -11,14 +11,37 @@
       <h6 class="m-0 font-weight-bold text-primary">Data Table Wisata</h6>
     </div>
     <div class="card-body">
-      <!--search -->
-      <div class="w-25 mb-3 ms-auto card rounded shadow">
-        <form action="<?= base_url('Dashboard/tabelwisata/search') ?>" method="get" autocomplete="off">
-          <div class="d-flex p-2 align-items-center">
-            <input type="text" name="keyword" value="" class="form-control me-2" placeholder="Search">
-            <button class="btn btn-primary btn-sm ms-2" type="submit"><i class="fas fa-search"></i></button>
-          </div>
-        </form>
+      <div class="d-flex justify-content-between mb-3">
+        <!-- filter -->
+        <div class="w-25 p-3 card rounded shadow">
+          <span>filter jam operasional</span>
+          <form action="<?= base_url('/Dashboard/tabelwisata/filter') ?>" method="get" autocomplete="off">
+            <div class="form-check">
+              <input class="form-check-input" value="1M" type="radio" name="filter_button" id="filter_button">
+              <label class="form-check-label" for="filter_button">
+                08.00 - 17.00
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" value="1M2J" type="radio" name="filter_button" id="filter_button">
+              <label class="form-check-label" for="filter_button">
+                06.00 - 18.00
+              </label>
+            </div>
+            <div>
+              <button type="submit" name="submit" class="btn btn-primary mb-3">SET</button>
+            </div>
+          </form>
+        </div>
+        <!--search -->
+        <div class="w-25 mb-3 ms-auto card rounded shadow" style="height: fit-content ;">
+          <form action="<?= base_url('Dashboard/tabelwisata/search') ?>" method="get" autocomplete="off">
+            <div class="d-flex p-2 align-items-center">
+              <input type="text" name="keyword" value="" class="form-control me-2" placeholder="Search">
+              <button class="btn btn-primary btn-sm ms-2" type="submit"><i class="fas fa-search"></i></button>
+            </div>
+          </form>
+        </div>
       </div>
       <div class="table-responsive">
         <table class=" table table-bordered" width='100%' cellspacing='0'>

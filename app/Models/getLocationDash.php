@@ -12,7 +12,7 @@ class getLocationDash extends Model
    protected $table            = 'profil_wisata';
    //  protected $primaryKey       = 'id';
    protected $useAutoIncrement = false;
-   protected $allowedFields = ['NAMA', 'VIDEO', 'DESKRIPSI_TEXT', 'GAMBAR'];
+
 
    public function __construct()
    {
@@ -66,7 +66,8 @@ class getLocationDash extends Model
             . $this->table . '.DESKRIPSI_TEXT,'
             . $this->table . '.GAMBAR,
          buka_tutup_wisata.JAM_OPERASIONAL, 
-         hari_operasional_wisata.HARI_OPERASIONAL, 
+         hari_operasional_wisata.HARI_OPERASIONAL,
+         hari_operasional_wisata.KODE_JAM_OPERASI,
          gps.LONGITUDE, 
          gps.ALTITUDE,
          userlogin.USERNAME,
@@ -85,6 +86,32 @@ class getLocationDash extends Model
    {
       $builder = $this->table($this->table);
       $builder->like('NAMA', $keyword); // Kolom yang ingin dicari
+      return $builder;
+   }
+
+   public function filter($data)
+   {
+      $builder = $this->builder($this->table);
+      $builder->select(
+         $this->table . '.ID,'
+            . $this->table . '.NAMA,'
+            . $this->table . '.VIDEO,'
+            . $this->table . '.DESKRIPSI_TEXT,'
+            . $this->table . '.GAMBAR,
+         buka_tutup_wisata.JAM_OPERASIONAL, 
+         hari_operasional_wisata.HARI_OPERASIONAL,
+         hari_operasional_wisata.KODE_JAM_OPERASI,
+         gps.LONGITUDE, 
+         gps.ALTITUDE,
+         userlogin.USERNAME,
+         userlogin.GAMBAR_PROFIL,'
+      );
+      $builder->join('hari_operasional_wisata', 'hari_operasional_wisata.ID = profil_wisata.ID');
+      $builder->join('buka_tutup_wisata', 'buka_tutup_wisata.KODE_JAM_OPERASI = hari_operasional_wisata.KODE_JAM_OPERASI');
+      $builder->join('gps', 'gps.ID = profil_wisata.ID');
+      $builder->join('uploader', 'uploader.ID = profil_wisata.ID');
+      $builder->join('userlogin', 'userlogin.ID_USER = uploader.USER_ID');
+      $builder->where("hari_operasional_wisata.KODE_JAM_OPERASI", $data);
       return $builder;
    }
 

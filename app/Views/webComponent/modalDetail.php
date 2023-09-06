@@ -7,14 +7,18 @@
           close
         </span>
       </div>
-      <img src="https://res.cloudinary.com/doclblyw3/image/upload/v<?= $item->version ?>/foto_geoloccation/<?= $getData[$i]["GAMBAR"] ?>" class="card-img-top" alt="<?= $getData[$i]["NAMA"] ?>">
+      <img src="https://res.cloudinary.com/doclblyw3/image/upload/v<?= $item->version ?>/foto_geoloccation/<?= $getData[$i]["GAMBAR"] ?>" class="card-img-top" alt="<?= $getData[$i]["NAMA"] ?>" style="height: 200px;">
       <div class="card-body p-1 overflow-auto">
         <h5 class="card-title bg-info text-white p-3 fw-bold">ID <?= $getData[$i]["ID"]; ?></h5>
         <p class="card-text p-3 fw-bold"><?= $getData[$i]["NAMA"] ?></p>
         <h6 class="card-title fw-bold bg-info text-white p-2">Video Deskripsi</h6>
-        <video id="my-video-<?= $i ?>" class="video-js  vjs-fluid mb-2" controls data-setup='{}'>
-          <source src="https://res.cloudinary.com/doclblyw3/video/upload/v<?= $getdataVideo->resources[$i]->version ?>/Video_geolocation/<?= $getData[$i]["VIDEO"] ?>" />
-        </video>
+        <?php if ($getData[$i]["VIDEO"] == NULL) : ?>
+          <span>Belum ada Video</span>
+        <?php else : ?>
+          <video id="my-video-<?= $i ?>" class="video-js  vjs-fluid mb-2" controls data-setup='{}'>
+            <source src="https://res.cloudinary.com/doclblyw3/video/upload/v<?= $getdataVideo->resources[$i]->version ?>/Video_geolocation/<?= $getData[$i]["VIDEO"] ?>" />
+          </video>
+        <?php endif; ?>
         <h6 class="card-title fw-bold bg-info text-white p-3">Deskripsi Wisata</h6>
         <p class="card-text p-2" style="text-align: justify;"><?= $getData[$i]["DESKRIPSI_TEXT"] ?></p>
       </div>

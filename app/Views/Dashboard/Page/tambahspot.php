@@ -70,8 +70,8 @@
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Map Wisata</h6>
         </div>
-        <div class="card-body position-relative mt-0 mx-0 mb-2 p-0 overflow-hidden" style="height: 350px;">
-          <div id="Maps" class="position-absolute top-0 bottom-0 w-100"></div>
+        <div class="card-body position-relative mt-0 mx-0  p-0 " style="height: 350px;">
+          <div id="map" class="position-absolute top-0 bottom-0 overflow-hidden w-100"></div>
         </div>
       </div>
     </div>
@@ -88,7 +88,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="<?= base_url('/Dashboard/tambahsport/add') ?>" method="post" enctype="multipart/form-data">
+        <form action="<?= base_url('/Dashboard/tambahsport/add') ?>" method="post" id="myForm" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="formControlname" class="form-label">Nama Wisata</label>
             <input type="text" class="form-control" name="nama" id="formControlname" placeholder="Nama Wisata">
@@ -107,7 +107,7 @@
           </div>
           <div class="mb-3">
             <label for="formPosting" class="form-label">Postingan</label>
-            <input type="text" class="form-control" name="posting" id="formControlLatitude" placeholder="Postingan">
+            <input type="text" class="form-control" name="posting" id="formPostingan" placeholder="Postingan">
           </div>
           <div class="mb-3">
             <label for="formControlGambar" class="form-label">Gambar</label>
@@ -127,7 +127,7 @@
   console.log("connected")
   mapboxgl.accessToken = 'pk.eyJ1IjoiYW1hcmFycnVmMjQiLCJhIjoiY2xldGdjNnR4MWZ3cTN2cDQ5djduZmUxNyJ9.PXQDnSL6qVCGg1OX63BZ7A'
   const map = new mapboxgl.Map({
-    container: 'Maps', // container ID
+    container: 'map', // container ID
     // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
     style: 'mapbox://styles/mapbox/streets-v12', // style URL
     center: [112.06, -6.893], // starting position [lng, lat]
@@ -199,6 +199,19 @@
     $('#AddModal').modal('show');
 
   });
+
+  const getDismisEl = document.querySelector('button[data-bs-dismiss="modal"]');
+  console.log(getDismisEl);
+  getDismisEl.addEventListener('click', () => {
+    console.log('close');
+    document.getElementById('myForm').reset();
+    // inputLongitude.value = '';
+    // inputLatitude.value = '';
+    // inputName.value = '';
+    // inputpostingan.value = '';
+    message.innerText = '';
+  })
+
 
   function create_Pop_Up(currentFeature) {
     const popUps = document.getElementsByClassName('mapboxgl-popup');

@@ -97,6 +97,21 @@
 
     })
 
+    // Create the Geolocate Control
+    const geolocate = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true,
+      showUserHeading: true
+    });
+
+    // Get a reference to the user-location div
+    const userLocationDiv = document.getElementById('user-location');
+
+    // Append the Geolocate Control button to the user-location div
+    userLocationDiv.appendChild(geolocate.onAdd(map));
+
 
     function getModalDetail(id) {
       // tangkap element modal detail
