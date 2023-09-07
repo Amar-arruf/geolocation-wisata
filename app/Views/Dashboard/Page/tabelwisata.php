@@ -11,9 +11,9 @@
       <h6 class="m-0 font-weight-bold text-primary">Data Table Wisata</h6>
     </div>
     <div class="card-body">
-      <div class="d-flex justify-content-between mb-3">
+      <div class="d-flex flex-column flex-md-row justify-content-center align-items-center align-items-md-start justify-content-md-between mb-3">
         <!-- filter -->
-        <div class="w-25 p-3 card rounded shadow">
+        <div class="min-vw-25 p-3 mb-3 card rounded shadow">
           <span>filter jam operasional</span>
           <form action="<?= base_url('/Dashboard/tabelwisata/filter') ?>" method="get" autocomplete="off">
             <div class="form-check">
@@ -34,7 +34,7 @@
           </form>
         </div>
         <!--search -->
-        <div class="w-25 mb-3 ms-auto card rounded shadow" style="height: fit-content ;">
+        <div class="min-vw-25 mb-3card rounded shadow" style="height: fit-content ;">
           <form action="<?= base_url('Dashboard/tabelwisata/search') ?>" method="get" autocomplete="off">
             <div class="d-flex p-2 align-items-center">
               <input type="text" name="keyword" value="" class="form-control me-2" placeholder="Search">

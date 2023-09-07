@@ -12,14 +12,17 @@
     </div>
     <div class="card-body">
       <!--search -->
-      <div class="w-25 mb-3 ms-auto card rounded shadow">
-        <form action="<?= base_url('/Dashboard/bukatutup/search') ?>" method="get" autocomplete="off">
-          <div class="d-flex p-2 align-items-center">
-            <input type="text" name="keyword" value="" class="form-control me-2" placeholder="Search">
-            <button class="btn btn-primary btn-sm ms-2" type="submit"><i class="fas fa-search"></i></button>
-          </div>
-        </form>
+      <div class="d-flex flex-column flex-md-row justify-content-center align-items-center align-items-md-start justify-content-md-end mb-3">
+        <div class="min-vw-25 mb-3 card rounded shadow">
+          <form action="<?= base_url('/Dashboard/bukatutup/search') ?>" method="get" autocomplete="off">
+            <div class="d-flex p-2 align-items-center">
+              <input type="text" name="keyword" value="" class="form-control me-2" placeholder="Search">
+              <button class="btn btn-primary btn-sm ms-2" type="submit"><i class="fas fa-search"></i></button>
+            </div>
+          </form>
+        </div>
       </div>
+
       <div class="table-responsive">
         <table class=" table table-bordered" width='100%' cellspacing='0'>
           <thead>
