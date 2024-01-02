@@ -16,7 +16,7 @@
           <span>Belum ada Video</span>
         <?php else : ?>
           <video id="my-video-<?= $i ?>" class="video-js  vjs-fluid mb-2" controls data-setup='{}'>
-            <source src="https://res.cloudinary.com/doclblyw3/video/upload/v<?= $getdataVideo->resources[$i]->version ?>/Video_geolocation/<?= $getData[$i]["VIDEO"] ?>" />
+            <source src="https://res.cloudinary.com/dp0ann1ok/video/upload/v<?= $getdataVideo->resources[$i]->version ?>/Video_geolocation/<?= $getData[$i]["VIDEO"] ?>" />
           </video>
         <?php endif; ?>
         <h6 class="card-title fw-bold bg-info text-white p-3">Deskripsi Wisata</h6>
