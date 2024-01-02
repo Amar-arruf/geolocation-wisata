@@ -17,7 +17,7 @@ class App extends BaseConfig
      *
      *    http://example.com/
      */
-    public string $baseURL = 'geolocationwisata6-lesn7050.b4a.run';
+    public string $baseURL = 'https://geolocationwisata6-lesn7050.b4a.run';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
