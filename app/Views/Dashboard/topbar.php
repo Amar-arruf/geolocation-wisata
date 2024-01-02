@@ -2,7 +2,9 @@
 // Load the curl request
 $http = \Config\Services::curlrequest();
 // Send a HEAD request to the URL
-$response = $http->request('get', $poto_profil,  ['http_errors' => false]);
+if ($poto_profil !== null) {
+  $response = $http->request('get', $poto_profil,  ['http_errors' => false]);
+}
 
 ?>
 <!-- Topbar -->
