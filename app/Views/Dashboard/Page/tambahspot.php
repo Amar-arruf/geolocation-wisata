@@ -187,10 +187,6 @@
                   <div id="message" class="p-1 message bg-lights rounded text-xs"></div>
                 </div>
                 <div class="mb-3">
-                  <label for="formPosting" class="form-label">Postingan</label>
-                  <input type="text" class="form-control" name="posting" id="formPostingan" placeholder="Postingan" required>
-                </div>
-                <div class="mb-3">
                   <label for="formControlGambar" class="form-label">Gambar</label>
                   <input type="file" id="input-gambar" class="form-control" name="image" id="formControlGambar" required>
                 </div>

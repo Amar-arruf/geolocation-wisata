@@ -7,7 +7,7 @@
           close
         </span>
       </div>
-      <img src="https://res.cloudinary.com/doclblyw3/image/upload/v<?= $item->version ?>/foto_geoloccation/<?= $getData[$i]["GAMBAR"] ?>" class="card-img-top" alt="<?= $getData[$i]["NAMA"] ?>" style="height: 200px;">
+      <img src="<?= $item->secure_url ?>" class="card-img-top" alt="<?= $getData[$i]["NAMA"] ?>" style="height: 200px;">
       <div class="card-body p-1 overflow-auto">
         <h5 class="card-title bg-info text-white p-3 fw-bold">ID <?= $getData[$i]["ID"]; ?></h5>
         <p class="card-text p-3 fw-bold"><?= $getData[$i]["NAMA"] ?></p>

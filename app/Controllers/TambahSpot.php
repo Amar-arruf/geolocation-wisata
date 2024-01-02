@@ -272,12 +272,12 @@ class TambahSpot extends BaseController
     $responseUploadImageToCloaud = $this->Cloudinary->Upload($getGambar->getTempName(), $optionConf);
 
     // upload ke postingan facebook
-    $getAkun = $this->Token->getToken($_COOKIE["access_token"]);
-    $getTypeLogin = $getAkun[0]["LOGIN_TYPE"];
-    if ($getTypeLogin === "Facebook") {
-      $getPostMessage = $this->request->getPost("posting");
-      $AddPost = $this->addPost($getTypeLogin, $responseUploadImageToCloaud["secure_url"], $getPostMessage . " " . base_url());
-    }
+    // $getAkun = $this->Token->getToken($_COOKIE["access_token"]);
+    // $getTypeLogin = $getAkun[0]["LOGIN_TYPE"];
+    // if ($getTypeLogin === "Facebook") {
+    //   $getPostMessage = $this->request->getPost("posting");
+    //   $AddPost = $this->addPost($getTypeLogin, $responseUploadImageToCloaud["secure_url"], $getPostMessage . " " . base_url());
+    // }
 
 
     if ($responseAddWisata && $responseaddGPS && $responseAddUpload && $responseADDDayOP && ($responseUploadImageToCloaud && !is_null($responseUploadImageToCloaud))) {

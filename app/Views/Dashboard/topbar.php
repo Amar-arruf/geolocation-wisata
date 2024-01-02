@@ -1,3 +1,10 @@
+<?php
+// Load the curl request
+$http = \Config\Services::curlrequest();
+// Send a HEAD request to the URL
+$response = $http->request('get', $poto_profil,  ['http_errors' => false]);
+
+?>
 <!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -45,7 +52,7 @@
     <li class="nav-item dropdown no-arrow">
       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= esc($username) ?></span>
-        <?php if ($poto_profil !== null) : ?>
+        <?php if ($poto_profil !== null && $response->getStatusCode() === 200) : ?>
           <img class="img-profile rounded-circle" src="<?= $poto_profil ?>">
         <?php else : ?>
           <div class="px-2"><i class="fas fa-user fa-fw text-gray-400"></i></div>

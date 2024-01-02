@@ -130,3 +130,6 @@ public/vendorCustom/
 publi/MD/
 public/bootstrap/
 public/js/
+
+#env 
+.env
