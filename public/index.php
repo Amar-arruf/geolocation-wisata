@@ -68,9 +68,9 @@ $app->setContext($context);
  */
 
 
-require_once ROOTPATH . 'vendor\autoload.php';
+require_once ROOTPATH . 'vendor/autoload.php';
 // mengeload library Dotenv kedalam Codeigniter agar terbaca
-require_once ROOTPATH . 'vendor\vlucas\phpdotenv\src\Dotenv.php';
+require_once ROOTPATH . 'vendor/vlucas/phpdotenv/src/Dotenv.php';
 
 use Dotenv\Dotenv;
 
