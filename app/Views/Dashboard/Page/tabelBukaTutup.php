@@ -120,7 +120,7 @@
         confirmButtonText: 'ya, hapus itu!'
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = `https://site.com/Dashboard/bukatutup/${getID}/delete`;
+          window.location.href = `https://geolocationwisata6-lesn7050.b4a.run/Dashboard/bukatutup/${getID}/delete`;
         }
       })
     })

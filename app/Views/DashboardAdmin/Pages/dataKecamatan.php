@@ -57,31 +57,31 @@
               </tr>
               <!-- modal Edit -->
               <div class="modal fade" id="EditModal-<?= $row["KODE_POS"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title font-weight-bold text-gray-800" id="exampleModalLabel">Edit Data Kecamatan dengan kode pos <?= $row["KODE_POS"]; ?></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <form action="<?= base_url('admin/kecamatan/' . $row["KODE_POS"] . '/edit') ?>" method="post">
-                          <div class="mb-3">
-                            <label for="formControlID" class="form-label">Kode Pos</label>
-                            <input type="text" class="form-control" name="id" id="formControlID" placeholder="ID" value="<?= $row["KODE_POS"] ?>" disabled readonly>
-                          </div>
-                          <div class="mb-3">
-                            <label for="formControlname" class="form-label">Kecamatan</label>
-                            <input type="text" class="form-control" name="kecamatan" id="formControlname" placeholder="Nama Wisata">
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">tutup</button>
-                            <button type="submit" class="btn btn-success">Simpan</button>
-                          </div>
-                        </form>
-                      </div>
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title font-weight-bold text-gray-800" id="exampleModalLabel">Edit Data Kecamatan dengan kode pos <?= $row["KODE_POS"]; ?></h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="<?= base_url('admin/kecamatan/' . $row["KODE_POS"] . '/edit') ?>" method="post">
+                        <div class="mb-3">
+                          <label for="formControlID" class="form-label">Kode Pos</label>
+                          <input type="text" class="form-control" name="id" id="formControlID" placeholder="ID" value="<?= $row["KODE_POS"] ?>" disabled readonly>
+                        </div>
+                        <div class="mb-3">
+                          <label for="formControlname" class="form-label">Kecamatan</label>
+                          <input type="text" class="form-control" name="kecamatan" id="formControlname" placeholder="Nama Wisata">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">tutup</button>
+                          <button type="submit" class="btn btn-success">Simpan</button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
+              </div>
             <?php endforeach; ?>
           </tbody>
         </table>
@@ -92,33 +92,33 @@
   </div>
   <!-- modal tambah -->
   <div class="modal fade" id="#tambahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title font-weight-bold text-gray-800" id="exampleModalLabel">tambah Data Kecamatan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form action="<?= base_url('admin/kecamatan/add') ?>" method="post">
-          <div class="mb-3">
-            <label for="formControlID" class="form-label">Kode Pos</label>
-            <input type="text" class="form-control" name="id" id="formControlID" placeholder="kode pos">
-          </div>
-          <div class="mb-3">
-            <label for="formControlname" class="form-label">Kecamatan</label>
-            <input type="text" class="form-control" name="kecamatan" id="formControlname" placeholder="nama Kecamatan" value="<?= $row["KECAMATAN"] ?>">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">tutup</button>
-            <button type="submit" class="btn btn-success">Simpan</button>
-          </div>
-        </form>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold text-gray-800" id="exampleModalLabel">tambah Data Kecamatan</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="<?= base_url('admin/kecamatan/add') ?>" method="post">
+            <div class="mb-3">
+              <label for="formControlID" class="form-label">Kode Pos</label>
+              <input type="text" class="form-control" name="id" id="formControlID" placeholder="kode pos">
+            </div>
+            <div class="mb-3">
+              <label for="formControlname" class="form-label">Kecamatan</label>
+              <input type="text" class="form-control" name="kecamatan" id="formControlname" placeholder="nama Kecamatan" value="<?= $row["KECAMATAN"] ?>">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">tutup</button>
+              <button type="submit" class="btn btn-success">Simpan</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-  
+
   <script>
     var flash = document.getElementById('flash');
     var data = flash.getAttribute('data-flash');
@@ -151,7 +151,7 @@
           confirmButtonText: 'ya, hapus itu!'
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = `https://site.com/Dashboard/tabelwisata/${getID}/${publicIdImg}/${publicIdVid}/delete`;
+            window.location.href = `https://geolocationwisata6-lesn7050.b4a.run/Dashboard/tabelwisata/${getID}/${publicIdImg}/${publicIdVid}/delete`;
           }
         })
       })
