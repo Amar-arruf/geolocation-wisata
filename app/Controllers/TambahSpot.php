@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\DataDashboardUser;
+use App\Models\DataWisata;
+use App\Models\getLocationDash;
 use App\Models\UserLogin;
 use App\Models\UserToken;
 
@@ -41,7 +43,7 @@ class TambahSpot extends BaseController
       $this->pageToken = $Page_Token->access_token;
     }
 
-    // tambahkan ke posting  Facebook
+    //tambahkan ke posting  Facebook
     if ($typeLogin === "Facebook") {
       // posting facebook
       $getResponse = $client->request("POST", '/' . getenv('Page_Id') . '/photos', [
@@ -97,16 +99,84 @@ class TambahSpot extends BaseController
     $data = new DataDashboardUser();
     $getData =  $data->getAllDataUser($this->UserId);
 
+    $data_history_wisata = new DataDashboardUser();
+    $get_data_history = $data_history_wisata->getAllDataUser($this->UserId);
+
     if (is_array($dataLogin)) {
       $userData = [
         'id_user' => $dataLogin[0]["ID_USER"],
         'username' => $dataLogin[0]["USERNAME"],
         'poto_profil' => $dataLogin[0]["GAMBAR_PROFIL"],
-        'data_wisata' => $getData
+        'data_wisata' => $getData,
+        'data_history' => $get_data_history
       ];
     }
 
     return view('Dashboard/Page/tambahspot', $userData);
+  }
+
+  public function history_edit($id)
+  {
+    $getWisata = new getLocationDash();
+    $responseEdit = $getWisata->edit($id);
+
+    // ambil file gambar dan video dari Form 
+    $getGambarFile = $this->request->getFile('gambar');
+    $getVideoFile = $this->request->getFile('video');
+
+    // check response Edit berhasil di update di database dan terdapat file nya 
+    if ($responseEdit) {
+      $uploadGambar = null;
+      $uploadVideo = null;
+      if (strlen($_FILES["gambar"]["name"]) !== 0) {
+        // hapus file dengan public_id yang lama 
+        $getPublic_Id = $this->request->getPost("publicId");
+
+        // hapus file gambar  di Cloudinary
+        $hapusfileImage_Old = $this->Cloudinary->deleteAssetsSingleImage($getPublic_Id);
+
+        $responseDelete = json_decode($hapusfileImage_Old, true);
+
+
+        if ($responseDelete["result"] == "ok") {
+          // upload File Gambar
+          $uploadGambar = $this->Cloudinary->Upload($getGambarFile->getTempName(), [
+            'public_id' => 'foto_geoloccation/' . pathinfo($getGambarFile->getName(), PATHINFO_FILENAME) // Nama file di Cloudinary
+          ]);
+        }
+      }
+      if (strlen($_FILES["video"]["name"]) !== 0) {
+        // hapus file dengan public_id yang lama
+        $getPublic_Id_Video = $this->request->getPost("publicIdVideo");
+
+        $hapusfileVideo_Old = $this->Cloudinary->deleteAssetsSingleVideo($getPublic_Id_Video);
+
+        $responseDeleteVideo = json_decode($hapusfileVideo_Old, true);
+
+        if ($responseDeleteVideo["result"] == "ok") {
+          // upload File Video
+          $uploadVideo = $this->Cloudinary->Upload($getVideoFile->getTempName(), [
+            'public_id' => 'Video_geolocation/' . pathinfo($getVideoFile->getName(), PATHINFO_FILENAME), // Nama file di Cloudinary
+            'resource_type' => 'video'
+          ]);
+        } else {
+          // upload File Video
+          $uploadVideo = $this->Cloudinary->Upload($getVideoFile->getTempName(), [
+            'public_id' => 'Video_geolocation/' . pathinfo($getVideoFile->getName(), PATHINFO_FILENAME), // Nama file di Cloudinary
+            'resource_type' => 'video'
+          ]);
+        }
+      }
+
+
+
+      if (json_encode($uploadGambar) !== null || json_encode($uploadVideo) !== null) {
+        return redirect()->to('/Dashboard/tambahsport')->with('success', 'data berhasil di edit dan upload gambar atau upload video');
+      } else {
+        return redirect()->to('/Dashboard/tambahsport')->with('success', 'data berhasil di edit');
+      }
+      return redirect()->to('/Dashboard/tambahsport')->with('failed', 'data gagal di edit');
+    }
   }
 
   public function add()

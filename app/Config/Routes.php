@@ -50,6 +50,7 @@ $routes->get('/Dashboard/harioperasi', 'HariOperasional::index');
 $routes->get('Dashboard/admin/dashboard', 'Admin\DashboardAdmin::dashboard');
 
 $routes->post('/Dashboard/tambahsport/add', "TambahSpot::add");
+$routes->post('/Dashboard/tambahsport/(:segment)/edit_history', 'TambahSpot::history_edit/$1');
 
 $routes->get('/Dashboard/tabelwisata/search', 'Tabelwisata::search');
 $routes->get('Dashboard/tabelwisata/filter', 'Tabelwisata::filter');

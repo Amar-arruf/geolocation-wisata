@@ -12,6 +12,7 @@ class getLocationDash extends Model
    protected $table            = 'profil_wisata';
    //  protected $primaryKey       = 'id';
    protected $useAutoIncrement = false;
+   protected $allowedFields = ['ID', 'NAMA', 'VIDEO', 'DESKRIPSI_TEXT', 'GAMBAR'];
 
 
    public function __construct()

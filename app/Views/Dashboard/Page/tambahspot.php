@@ -1,9 +1,13 @@
   <?= $this->extend('Dashboard/layout'); ?>
 
+  <?php $session = \Config\Services::session(); ?>
+
   <?= $this->section('content') ?>
+  <div id="flash" data-flash="<?= $session->getFlashdata('success') ? $session->getFlashdata('success') : $session->getFlashdata('failed') ?>"></div>
   <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <p class="h3 fw-bold mb-0 text-gray-800">Tambah Spot Wisata</p>
+      <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" type="button" data-bs-toggle="modal" data-bs-target="#modalHistory">History</a>
     </div>
 
     <!-- row -->
@@ -80,6 +84,81 @@
         </div>
       </div>
 
+      <!-- modal history -->
+      <div class="modal fade" id="modalHistory" aria-labelledby="modalHistory" aria-hidden="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title font-weight-bold text-gray-800" id="exampleModalLabel">List History Spot</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <?php if (count($data_history) != 0) : ?>
+              <div class="modal-body overflow-auto" style="height:300px ;">
+                <?php foreach ($data_history as $item) : ?>
+                  <div class="card shadow p-2">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                      <h6 class="mb-0 text-black"><?= $item["ID"]; ?></h6>
+                      <div class="px-3">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editModalHistory-<?= $item["ID"]; ?>">
+                          <i class="fas fa-pen-to-square"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <span class="d-inline-block"><?= $item["NAMA"]; ?></span>
+                  </div>
+
+                  <!-- modal edit -->
+                  <div class="modal fade" id="editModalHistory-<?= $item["ID"]; ?>" dta tabindex="-1" aria-labelledby="editHistoryWisata" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title font-weight-bold text-gray-800" id="editModalHistory-<?= $item["ID"] ?>">Edit Wisata dengan ID <?= $item["ID"]; ?></h5>
+                        </div>
+                        <div class="modal-body">
+                          <form action="<?= base_url('/Dashboard/tambahsport/' . $item["ID"] . '/edit_history') ?>" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                              <label for="formControlID" class="form-label">id</label>
+                              <input type="text" class="form-control" name="id" id="formControlID" placeholder="ID" value="<?= $item["ID"] ?>" disabled readonly>
+                            </div>
+                            <div class="mb-3">
+                              <label for="formControlname" class="form-label">Nama Wisata</label>
+                              <input type="text" class="form-control" name="nama" id="formControlname" placeholder="Nama Wisata" value="<?= $item["NAMA"] ?>">
+                            </div>
+                            <div class="mb-3">
+                              <label for="formControlVideo" class="form-label">Video</label>
+                              <input type="file" class="form-control" name="video" id="formControlVideo" placeholder="Video beserta ekstensi sesuai diupload di cloaud" value="<?= $item["VIDEO"] ?>">
+                            </div>
+                            <div class="mb-3">
+                              <label for="formControlDesc" class="form-label">Deskripsi Text</label>
+                              <textarea class="form-control" name="desc" id="formControlDesc" placeholder="Berikan Desc Wisata" rows="3"><?= $item["DESKRIPSI_TEXT"] ?></textarea>
+                            </div>
+                            <input type="hidden" class="form-control" name="publicId" value="foto_geoloccation/<?= strpos($item["GAMBAR"], ".jpg") == true ? str_replace(".jpg", "", $item["GAMBAR"]) : str_replace(".webp", "", $item["GAMBAR"])  ?>">
+                            <input type="hidden" class="form-control" name="publicIdVideo" value="Video_geolocation/<?= str_replace(".mp4", "", $item["VIDEO"]) ?>">
+                            <div class="mb-3">
+                              <label for="formControlGambar" class="form-label">Gambar</label>
+                              <input type="file" class="form-control" name="gambar" id="formControlGambar" placeholder="file Gambar beserta ekstensi yang disimpan di cloud" value="<?= $item["GAMBAR"] ?>">
+                            </div>
+                            <div class="modal-footer">
+
+                              <button type="submit" class="btn btn-success">Simpan</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                <?php endforeach; ?>
+              </div>
+            <?php else : ?>
+              <div class="modal-body">
+                <div class="card shadow p-2"> <span>belum ada data history</span></div>
+              </div>
+            <?php endif; ?>
+          </div>
+        </div>
+      </div>
+
 
       <!-- modal add -->
       <div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
@@ -87,7 +166,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title font-weight-bold text-gray-800" id="exampleModalLabel">Tambah Spot Wisata</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="modalADD"></button>
             </div>
             <div class="modal-body">
               <form action="<?= base_url('/Dashboard/tambahsport/add') ?>" method="post" id="myForm" enctype="multipart/form-data">
@@ -126,6 +205,18 @@
       </div>
 
       <script>
+        var flash = document.getElementById('flash');
+        var data = flash.getAttribute('data-flash');
+        console.log(data)
+
+        if (data) {
+          Swal.fire(
+            'perhatian!',
+            data,
+            'warning'
+          )
+        }
+
         console.log("connected")
         mapboxgl.accessToken = 'pk.eyJ1IjoiYW1hcmFycnVmMjQiLCJhIjoiY2xldGdjNnR4MWZ3cTN2cDQ5djduZmUxNyJ9.PXQDnSL6qVCGg1OX63BZ7A'
         const map = new mapboxgl.Map({
@@ -215,7 +306,7 @@
 
         userLocationDash.appendChild(Geolocate.onAdd(map));
 
-        const getDismisEl = document.querySelector('button[data-bs-dismiss="modal"]');
+        const getDismisEl = document.getElementById("modalADD");
         console.log(getDismisEl);
         getDismisEl.addEventListener('click', () => {
           console.log('close');
