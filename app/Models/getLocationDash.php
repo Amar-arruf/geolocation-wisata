@@ -119,13 +119,13 @@ class getLocationDash extends Model
    public function edit($id)
    {
       $data = [];
-      if (strlen($_FILES["gambar"]["name"]) !== 0) {
+      if (isset($_FILES["gambar"]) && strlen($_FILES["gambar"]["name"]) !== 0) {
          $data = [
             'NAMA' => $_POST["nama"],
             'DESKRIPSI_TEXT'    => $_POST["desc"],
             'GAMBAR'    => $_FILES["gambar"]["name"]
          ];
-      } else if (strlen($_FILES["video"]["name"]) !== 0) {
+      } else if ($_FILES["video"] && strlen($_FILES["video"]["name"]) !== 0) {
          $data = [
             'NAMA' => $_POST["nama"],
             'VIDEO'    => $_FILES["video"]["name"],

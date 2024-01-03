@@ -122,7 +122,7 @@ class TabelWisata extends BaseController
     if ($responseEdit) {
       $uploadGambar = null;
       $uploadVideo = null;
-      if (strlen($_FILES["gambar"]["name"]) !== 0) {
+      if (isset($_FILES["gambar"]) && strlen($_FILES["gambar"]["name"]) !== 0) {
         // hapus file dengan public_id yang lama 
         $getPublic_Id = $this->request->getPost("publicId");
 
@@ -139,7 +139,7 @@ class TabelWisata extends BaseController
           ]);
         }
       }
-      if (strlen($_FILES["video"]["name"]) !== 0) {
+      if ($_FILES["video"] && strlen($_FILES["video"]["name"]) !== 0) {
         // hapus file dengan public_id yang lama
         $getPublic_Id_Video = $this->request->getPost("publicIdVideo");
 
