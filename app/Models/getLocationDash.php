@@ -125,7 +125,7 @@ class getLocationDash extends Model
             'DESKRIPSI_TEXT'    => $_POST["desc"],
             'GAMBAR'    => $_FILES["gambar"]["name"]
          ];
-      } else if ($_FILES["video"] && strlen($_FILES["video"]["name"]) !== 0) {
+      } else if (isset($_FILES["video"]) && strlen($_FILES["video"]["name"]) !== 0) {
          $data = [
             'NAMA' => $_POST["nama"],
             'VIDEO'    => $_FILES["video"]["name"],
