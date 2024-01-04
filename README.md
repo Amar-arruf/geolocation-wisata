@@ -1,62 +1,30 @@
-# CodeIgniter 4 Application Starter
+<h1 align="center">Geolocation Wisata</h1>
 
-## What is CodeIgniter?
+website : [https://geolocationwisata6-lesn7050.b4a.run/](https://geolocationwisata6-lesn7050.b4a.run/)
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## tentang project
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+Geolocation wisata merupakan sebuah projek web aplikasi untuk memetakan lokasi wisata di peta dengan bantuan MapBox API agar user tahu lokasi wisata tahu tempatnya . projek ini di bangun menggunakan PHP **Codeigniter 4**.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+### Feature
 
-The user guide corresponding to the latest version of the framework can be found
-[here](https://codeigniter4.github.io/userguide/).
+- menambahkan spot wisata dengan tiga opsi yaitu :
 
-## Installation & updates
+1. menggunakan data exif photo yang di upload (dashboard)
+2. klik pada map /peta (dashboard)
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+- login dashboard dengan tiga opsi
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+1. Google
+2. Instagram
+3. Facebook
 
-## Setup
+- history upload spot wisata
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+### Tech Stack
 
-## Important Change with index.php
-
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
-
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
-
-**Please** read the user guide for a better explanation of how CI4 works!
-
-## Repository Management
-
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
-
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
-
-## Server Requirements
-
-PHP version 7.4 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+- [![boostrap](https://img.shields.io/badge/boostrap-1765e3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/docs/4.6/getting-started/introduction/)
+- [![sbadmin](https://img.shields.io/badge/sbadmin-1765e3?style=for-the-badge&logo=sbadmin&logoColor=white)](https://startbootstrap.com/theme/sb-admin-2)
+- [![Javascript](https://img.shields.io/badge/javascript-ebdd1c?style=for-the-badge&logo=javascript&logoColor=white)](https://javascript.info)
+- [![J-Query](https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white)](https://jquery.com)
+- [![MySQL](https://img.shields.io/badge/MySQL-8.0-blue.svg)](https://www.mysql.com/)
